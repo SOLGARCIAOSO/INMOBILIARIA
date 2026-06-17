@@ -5,28 +5,31 @@
 }
 
 .catalogo-container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
     padding: 20px;
+    width: 90% !important;   /* Reduce el ancho total al 90% del espacio disponible */
+    max-width: 1200px !important; /* Limita el crecimiento máximo para que no se estiren infinitamente */
+    margin: 0 auto !important;    /* Centra el contenedor en la pantalla */
 }
 
 .grid-inmuebles {
     display: grid !important;
-    /* Esto crea 4 columnas iguales, cada una ocupando 1fr del espacio */
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 30px; /* Esto separará las tarjetas entre sí */
-    padding: 40px 20px;
-    width: 100%;
-    max-width: 1400px; /* Ajustado para dar más aire */
-    margin: 0 auto;
+    /* Ajustamos el minmax a 300px. Si quieres que sean más pequeñas, aumenta este valor (ej. 350px) */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: 30px !important;
+    width: 100% !important;
 }
 
-/* Asegurar que las cards no tengan márgenes que interfieran */
 .card {
+    /* IMPORTANTE: Quitamos el width: 100% si lo tenías, 
+       o lo dejamos pero permitimos que el grid lo controle */
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    /* Aseguramos que no tenga un max-width que la fuerce a ser gigante */
+    max-width: 100%; 
     display: flex;
     flex-direction: column;
-    width: 100%; /* La tarjeta ocupará el 100% de la celda del grid */
 }
 
 .grid-inmuebles > .card {
