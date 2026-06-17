@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detalle.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="detalle-container">
+    
+    <header class="detalle-header">
+        <h1 class="titulo-inmueble">{{ inmueble.titulo }}</h1>
+        <p class="precio-inmueble">$ {{ "{:,.0f}".format(inmueble.precio) }} COP</p>
+        <p class="ubicacion"><i data-lucide="map-pin"></i> {{ inmueble.direccion }}, {{ inmueble.localidad }}, {{ inmueble.ciudad }}</p>
+    </header>
+
+    <div class="galeria-grid">
+        {% if inmueble.imagenes %}
+            {% for img in inmueble.imagenes %}
+                <img src="{{ url_for('static', filename='uploads/' + img.ruta) }}" class="gallery-item" alt="Imagen {{ loop.index }}">
+            {% endfor %}
+        {% else %}
+            <p>No se encontraron imágenes asociadas.</p>
+        {% endif %}
+    </div>
+
+    <div class="accordion">
+        <div class="accordion-item">
+            <button class="accordion-header">Descripción General <i data-lucide="chevron-down"></i></button>
+            <div class="accordion-content">
+                <p>{{ inmueble.descripcion }}</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Detalles del inmueble <i data-lucide="chevron-down"></i></button>
+            <div class="accordion-content">
+                <div class="details-grid">
+                    <div class="info-card"><i data-lucide="home" class="info-icon"></i> <div><small>Tipo</small><p>{{ inmueble.tipo_inmueble }}</p></div></div>
+                    <div class="info-card"><i data-lucide="calendar" class="info-icon"></i> <div><small>Antigüedad</small><p>{{ inmueble.antiguedad }} años</p></div></div>
+                    <div class="info-card"><i data-lucide="layers" class="info-icon"></i> <div><small>Estrato</small><p>{{ inmueble.estrato }}</p></div></div>
+                    <div class="info-card"><i data-lucide="maximize" class="info-icon"></i> <div><small>Área</small><p>{{ inmueble.area }} m²</p></div></div>
+                    <div class="info-card"><i data-lucide="bed" class="info-icon"></i> <div><small>Habitaciones</small><p>{{ inmueble.habitaciones }}</p></div></div>
+                    <div class="info-card"><i data-lucide="bath" class="info-icon"></i> <div><small>Baños</small><p>{{ inmueble.banos }}</p></div></div>
+                    <div class="info-card"><i data-lucide="car" class="info-icon"></i> <div><small>Garajes</small><p>{{ inmueble.cantidad_garajes }}</p></div></div>
+                    <div class="info-card"><i data-lucide="shield-check" class="info-icon"></i> <div><small>Estado</small><p>{{ inmueble.estado }}</p></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header">Otras Características <i data-lucide="chevron-down"></i></button>
+            <div class="accordion-content">
+                <div class="details-grid">
+                    <div class="info-card"><i data-lucide="paint-bucket" class="info-icon"></i> <div><small>Remodelado</small><p>{{ 'Sí' if inmueble.remodelado else 'No' }}</p></div></div>
+                    <div class="info-card"><i data-lucide="box" class="info-icon"></i> <div><small>Depósito</small><p>{{ 'Sí' if inmueble.deposito else 'No' }}</p></div></div>
+                    <div class="info-card"><i data-lucide="user-check" class="info-icon"></i> <div><small>Portería</small><p>{{ 'Sí' if inmueble.porteria else 'No' }}</p></div></div>
+                    <div class="info-card"><i data-lucide="flame" class="info-icon"></i> <div><small>Gas Natural</small><p>{{ 'Sí' if inmueble.gas else 'No' }}</p></div></div>
+                    <div class="info-card"><i data-lucide="parking-square" class="info-icon"></i> <div><small>Parqueadero</small><p>{{ 'Sí' if inmueble.parqueadero else 'No' }}</p></div></div>
+                    <div class="info-card"><i data-lucide="washing-machine" class="info-icon"></i> <div><small>Lavandería</small><p>{{ 'Sí' if inmueble.zona_lavanderia else 'No' }}</p></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if inmueble.enlace_maps %}
+    <a href="{{ inmueble.enlace_maps }}" target="_blank" class="btn-maps">
+        <i data-lucide="map"></i> Ver Ubicación en Maps
+    </a>
+    {% endif %}
+
+    
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ url_for('static', filename='js/detalle.js') }}"></script>
+{% endblock %}

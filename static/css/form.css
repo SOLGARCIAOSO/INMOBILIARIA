@@ -1,0 +1,74 @@
+:root {
+    --primary-blue: #0b1e42;
+    --accent-gold: #c5a059;
+    --bg-page: #eef2f7; /* Azul grisáceo muy suave para el fondo */
+    --text-dark: #2d3436;
+}
+
+body { 
+    background-color: var(--bg-page); 
+    font-family: 'Poppins', sans-serif; 
+}
+
+.form-container {
+    max-width: 600px; /* Un poco más amplio para mayor comodidad */
+    margin: 50px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    border-top: 6px solid var(--primary-blue); /* Toque de marca superior */
+}
+
+.form-container h2 {
+    text-align: left;
+    margin-bottom: 30px;
+    color: var(--primary-blue);
+    font-weight: 700;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-container input, .form-container textarea {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 2px solid #edf2f7;
+    border-radius: 12px;
+    background-color: #fafbfc;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.form-container input:focus, .form-container textarea:focus {
+    outline: none;
+    border-color: var(--accent-gold); /* El borde cambia a dorado al enfocar */
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1);
+}
+
+.btn-submit {
+    background: var(--primary-blue); /* Azul corporativo */
+    color: #fff;
+    font-weight: 600;
+    padding: 16px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 25px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-submit:hover {
+    background: var(--accent-gold); /* Dorado al pasar el mouse */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);
+}

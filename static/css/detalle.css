@@ -1,0 +1,89 @@
+:root {
+    --primary-blue: #0b1e42;   /* Azul profundo corporativo */
+    --accent-gold: #c5a059;    /* Dorado insignia */
+    --bg-light: #fdfdfd;       /* Un blanco casi puro */
+    --text-dark: #2d3436;
+}
+
+/* --- Base --- */
+.detalle-container { 
+    max-width: 1100px; 
+    margin: 40px auto; 
+    padding: 20px; 
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+    color: var(--text-dark);
+}
+
+/* --- Cabecera --- */
+.detalle-header { margin-bottom: 35px; border-bottom: 3px solid var(--primary-blue); padding-bottom: 20px; }
+.titulo-inmueble { font-size: 2.8rem; font-weight: 800; color: var(--primary-blue); margin: 0; }
+.precio-inmueble { font-size: 2rem; color: var(--accent-gold); font-weight: 700; margin: 10px 0; }
+.ubicacion { display: flex; align-items: center; gap: 10px; color: #555; font-size: 1.1rem; }
+
+/* --- Galería --- */
+.galeria-grid { 
+    display: grid; 
+    grid-template-columns: 2fr 1fr 1fr; 
+    grid-template-rows: repeat(2, 220px); 
+    gap: 12px; 
+    margin-bottom: 40px; 
+    border-radius: 16px; 
+    overflow: hidden; 
+}
+.galeria-grid img:first-child { grid-column: 1 / 2; grid-row: 1 / 3; }
+.gallery-item { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.gallery-item:hover { transform: scale(1.03); filter: brightness(0.95); }
+
+/* --- Acordeones --- */
+.accordion { border: 1px solid #e0e0e0; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+.accordion-header { 
+    background: var(--primary-blue); 
+    color: white; 
+    width: 100%; 
+    padding: 20px; 
+    border: none; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    cursor: pointer; 
+    font-weight: 700; 
+    letter-spacing: 0.5px;
+}
+.accordion-header:hover { background: #162d5a; }
+.accordion-content { display: none; padding: 30px; background: #ffffff; border-top: 1px solid #eee; }
+
+/* --- Grid de Detalles --- */
+.details-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+    gap: 20px; 
+}
+.info-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border-left: 5px solid var(--accent-gold);
+    transition: transform 0.2s;
+}
+.info-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.08); }
+.info-icon { color: var(--accent-gold); width: 24px; height: 24px; }
+.info-card small { display: block; color: #777; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+.info-card p { font-weight: 700; margin: 0; color: var(--primary-blue); font-size: 1rem; }
+
+/* --- Botón Maps --- */
+.btn-maps { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 12px; 
+    padding: 16px 30px; 
+    background: var(--primary-blue); 
+    color: white; 
+    text-decoration: none; 
+    border-radius: 8px; 
+    font-weight: 700; 
+    transition: all 0.3s;
+}
+.btn-maps:hover { background: var(--accent-gold); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }

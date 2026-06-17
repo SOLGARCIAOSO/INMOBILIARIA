@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quienes_somos.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="quienes-somos-container">
+    
+    <header class="qs-header">
+        <h1>CAPITAL GROUP INMOBILIARIA & INVERSIONES</h1>
+        <p><strong>Subdivisión Estratégica de Claros Epoxy S.A.S. | NIT 901675586-9</strong></p>
+        <h2>“Donde la inversión se convierte en patrimonio.”</h2>
+    </header>
+
+    <section>
+        <h2>¿QUIÉNES SOMOS?</h2>
+        <p>Capital Group Inmobiliaria & Inversiones es una subdivisión estratégica de <strong>Claros Epoxy S.A.S.</strong>, creada con el propósito de desarrollar oportunidades inmobiliarias, crecimiento patrimonial e inversión estratégica dentro del sector inmobiliario colombiano.</p>
+    </section>
+
+    <section class="qs-mision-vision">
+        <div class="qs-card qs-mision">
+            <h3>MISIÓN</h3>
+            <p>Brindar soluciones inmobiliarias y oportunidades de inversión con enfoque estratégico, ayudando a nuestros clientes a construir patrimonio.</p>
+        </div>
+        <div class="qs-card qs-vision">
+            <h3>VISIÓN</h3>
+            <p>Ser una empresa reconocida en el sector inmobiliario colombiano por su excelencia, innovación y compromiso.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>NUESTROS SERVICIOS</h2>
+        <ul>
+            <li><strong>Comercialización:</strong> Venta de propiedades de inversión.</li>
+            <li><strong>Intermediación:</strong> Conectamos compradores e inversionistas.</li>
+            <li><strong>Captación:</strong> Promoción profesional de propiedades.</li>
+            <li><strong>Asesoría:</strong> Orientación experta en procesos de negociación.</li>
+            <li><strong>Inversión:</strong> Oportunidades con alto potencial de valorización.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>NUESTROS PRINCIPIOS</h2>
+        <div class="qs-grid-principios">
+            <div class="qs-principio-item">
+                <h4>Transparencia</h4>
+                <div class="descripcion">Actuamos con honestidad y claridad en cada negociación.</div>
+            </div>
+            <div class="qs-principio-item">
+                <h4>Compromiso</h4>
+                <div class="descripcion">Trabajamos con responsabilidad y enfoque en resultados.</div>
+            </div>
+            <div class="qs-principio-item">
+                <h4>Confianza</h4>
+                <div class="descripcion">Construimos relaciones comerciales sólidas y sostenibles.</div>
+            </div>
+            <div class="qs-principio-item">
+                <h4>Profesionalismo</h4>
+                <div class="descripcion">Mantenemos altos estándares de atención y gestión empresarial.</div>
+            </div>
+            <div class="qs-principio-item">
+                <h4>Innovación</h4>
+                <div class="descripcion">Buscamos constantemente nuevas oportunidades de crecimiento.</div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

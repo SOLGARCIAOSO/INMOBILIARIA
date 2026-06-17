@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h2>Formulario de contacto</h2>
+<form action="/contacto" method="POST">
+    <input type="hidden" name="inmueble_id" value="{{ ref }}">
+    
+    <input type="text" name="nombre" placeholder="Nombre completo" required><br>
+    <input type="email" name="email" placeholder="Correo electrónico" required><br>
+    <textarea name="mensaje" placeholder="Escribe aquí tu mensaje"></textarea><br>
+    <button type="submit">Enviar Solicitud</button>
+</form>
+{% endblock %}

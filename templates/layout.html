@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capital Group Inmobiliaria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <div id="cookie-consent" class="cookie-alert">
+        <div class="cookie-content">
+            <h2>Política de Privacidad</h2>
+            <p>Usamos cookies para mejorar tu experiencia. Al navegar, aceptas nuestra política.</p>
+            <button type="button" id="accept-cookies" class="btn-primary">Aceptar</button>
+            <a href="{{ url_for('politicas') }}">Ver Políticas</a>
+        </div>
+    </div>
+
+    <button class="menu-toggle" aria-label="Abrir menú">
+        <i data-lucide="menu"></i>
+    </button>
+
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <h2>Capital Group</h2>
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/quienes-somos">Quiénes Somos</a></li>
+                <li><a href="/catalogo">Catálogo</a></li>
+                <li><a href="/contacto">Contáctanos</a></li>
+                <li><a href="/politicas">Políticas</a></li>
+                <li><a href="/inmueble_form" style="color: var(--accent-gold);">Registrar Inmueble</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert-box">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <h3>INFORMACIÓN CORPORATIVA</h3>
+            <p><strong>Capital Group Inmobiliaria & Inversiones</strong><br>
+            Subdivisión Estratégica de Claros Epoxy S.A.S. | NIT 901675586-9</p>
+            
+            <div class="footer-links">
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=capitalgroup.cg01@gmail.com" target="_blank">📧 Correo</a> |
+                <a href="https://wa.me/573225903484" target="_blank">📞 WhatsApp</a> |
+                <span>📍 Bogotá D.C. - Colombia</span>
+            </div>
+
+            <div class="social-media">
+                <p>Instagram y TikTok: <a href="https://www.instagram.com/cg_capital.group" target="_blank">@cg_capital.group</a></p>
+            </div>
+            <p class="copyright">Todos los derechos reservados &copy; 2026</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // Inicializa todos los iconos data-lucide presentes
+        lucide.createIcons();
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

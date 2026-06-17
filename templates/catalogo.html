@@ -1,0 +1,71 @@
+{% extends 'layout.html' %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/catalogo.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="catalogo-container">
+    <h1>Catálogo de Inmuebles</h1>
+    
+    <div class="grid-inmuebles">
+        {% for inmueble in apartamentos %}
+            <div class="card">
+                <div class="card-image">
+                    {% if inmueble.imagenes and inmueble.imagenes|length > 0 %}
+                        <img src="{{ url_for('static', filename='uploads/' + inmueble.imagenes[0].ruta) }}" 
+                             alt="{{ inmueble.titulo }}" class="img-inmueble">
+                    {% else %}
+                        <div class="no-image">Sin imagen</div>
+                    {% endif %}
+                </div>
+
+                <div class="card-body">
+                    <span class="badge">{{ inmueble.estado or 'Disponible' }}</span>
+                    
+                    <h3>{{ inmueble.titulo }}</h3>
+                    <p class="precio"><strong>${{ "{:,.0f}".format(inmueble.precio) }}</strong></p>
+                    <p class="ciudad">{{ inmueble.ubicacion }}</p>
+                    
+                    <div class="card-details">
+                        <span>{{ inmueble.habitaciones }} Hab.</span>
+                        <span>{{ inmueble.banos }} Baños</span>
+                        <span>{{ inmueble.parqueaderos }} Parq.</span>
+                    </div>
+                    
+                    <a href="{{ url_for('detalle_inmueble', id=inmueble.id) }}" class="btn-contacto">Ver detalles</a>
+                    
+                    <div class="admin-actions" style="margin-top: 15px; display: flex; gap: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+    
+    <a href="{{ url_for('editar_inmueble', id=inmueble.id) }}" class="admin-btn edit-btn">
+        <i data-lucide="edit-2"></i> Editar
+    </a>
+    
+    <button type="button" 
+            onclick="confirmarEliminacion('{{ inmueble.id }}', '{{ inmueble.titulo }}')" 
+            class="admin-btn edit-btn">
+        <i data-lucide="trash-2"></i> Eliminar
+    </button>
+</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function confirmarEliminacion(id, titulo) {
+        if (confirm(`¿Estás seguro de eliminar el inmueble: ${titulo}?`)) {
+            window.location.href = `/eliminar/${id}`;
+        }
+    }
+
+    // Inicialización de iconos una vez cargado el DOM
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    });
+</script>
+{% endblock %}
