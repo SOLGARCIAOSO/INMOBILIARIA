@@ -67,6 +67,11 @@
         <p>Elige tu medio de contacto preferido para recibir más información:</p>
         
         <div class="contacto-opciones">
+
+<a href="{{ url_for('contacto', ref=inmueble.id) }}" class="btn-interes">
+    Deseo más información sobre este inmueble
+</a>
+
             <a href="https://wa.me/573225903484" target="_blank" class="opcion-contacto whatsapp">
                 <i data-lucide="message-circle"></i>
                 <span>Contactar por WhatsApp</span>

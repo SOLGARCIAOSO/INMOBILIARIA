@@ -1,12 +1,21 @@
 {% extends 'layout.html' %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='contacto.css') }}">
+{% endblock %}
 {% block content %}
-<h2>Formulario de contacto</h2>
-<form action="/contacto" method="POST">
-    <input type="hidden" name="inmueble_id" value="{{ ref }}">
+<div class="contacto-form">
+    <h2>Formulario de contacto</h2>
+    <p>¿Interesado en este inmueble? Déjanos tus datos.</p>
     
-    <input type="text" name="nombre" placeholder="Nombre completo" required><br>
-    <input type="email" name="email" placeholder="Correo electrónico" required><br>
-    <textarea name="mensaje" placeholder="Escribe aquí tu mensaje"></textarea><br>
-    <button type="submit">Enviar Solicitud</button>
-</form>
+    <form action="/contacto" method="POST">
+        <input type="hidden" name="inmueble_id" value="{{ ref }}">
+        
+        <input type="text" name="nombre" placeholder="Nombre completo" required>
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <textarea name="mensaje" placeholder="Escribe aquí tu comentario (opcional)"></textarea>
+        
+        <button type="submit">Enviar Solicitud</button>
+    </form>
+</div>
 {% endblock %}

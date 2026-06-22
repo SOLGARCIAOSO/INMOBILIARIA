@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from config import Config
+from flask_mail import Mail, Message
 
 from modelos_db import db, Inmueble, Contacto, Imagen
 import os
@@ -13,6 +14,19 @@ app.config.from_object(Config)
 # Asegurar configuración clave
 app.secret_key = 'una_clave_muy_secreta_y_larga'
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+# Configuración de Flask-Mail
+# --- Configuración para enviar correos REALES desde Gmail ---
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'garciaosorio04@gmail.com'
+# Quitamos los espacios a la contraseña: vjfmqpkqhdnjgpam
+app.config['MAIL_PASSWORD'] = 'vjfmqpkqhdnjgpam' 
+app.config['MAIL_DEFAULT_SENDER'] = 'garciaosorio04@gmail.com'
+
+mail = Mail(app)
 
 # 2. Inicializar DB UNA SOLA VEZ
 db.init_app(app)
@@ -123,27 +137,61 @@ def guardar_inmueble():
 @app.route('/contacto', methods=['GET', 'POST'])
 def contacto():
     if request.method == 'POST':
-        # Tu lógica de guardar contacto
-        nuevo_contacto = Contacto(
-            nombre=request.form['nombre'],
-            documento_identidad=request.form.get('documento_identidad'),
-            telefono=request.form.get('telefono'),
-            email=request.form.get('email'),
-            tipo_solicitud=request.form.get('tipo_solicitud'),
-            mensaje=request.form['mensaje'],
-            inmueble_id=request.form.get('inmueble_id')
-        )
-        db.session.add(nuevo_contacto)
-        db.session.commit()
-        flash("Solicitud recibida.", "success")
+        # 1. Captura de datos
+        nombre = request.form.get('nombre')
+        email = request.form.get('email')
+        mensaje = request.form.get('mensaje')
+        inmueble_id_str = request.form.get('inmueble_id')
+        
+        # 2. Validación robusta del ID
+        if not inmueble_id_str or not inmueble_id_str.isdigit():
+            flash("Error: No se pudo identificar la propiedad correctamente.", "danger")
+            return redirect(url_for('catalogo'))
+            
+        inmueble_id = int(inmueble_id_str)
+
+        # 3. Guardado en Base de Datos
+        try:
+            nuevo_contacto = Contacto(
+                nombre=nombre,
+                email=email,
+                mensaje=mensaje,
+                inmueble_id=inmueble_id
+            )
+            db.session.add(nuevo_contacto)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback() # Si falla BD, revertimos cambios
+            print(f"Error de Base de Datos: {e}")
+            flash("Hubo un problema al guardar tu solicitud. Intenta de nuevo.", "danger")
+            return redirect(url_for('catalogo'))
+
+        # 4. Envío de Correo
+        try:
+            msg = Message(
+                subject=f"Interés en propiedad ID: {inmueble_id}",
+                recipients=['garciaosorio04@gmail.com']
+            )
+            msg.html = f"""
+            <h3>Nueva solicitud de información</h3>
+            <p><b>Cliente:</b> {nombre}</p>
+            <p><b>Email:</b> {email}</p>
+            <p><b>Propiedad ID:</b> {inmueble_id}</p>
+            <p><b>Mensaje:</b> {mensaje if mensaje else 'El usuario solicita más información.'}</p>
+            """
+            mail.send(msg)
+            flash("Solicitud recibida y notificada correctamente.", "success")
+        except Exception as e:
+            print(f"Error enviando email: {e}")
+            # Guardamos en BD, pero notificamos el error de correo
+            flash("Tu solicitud fue guardada, pero ocurrió un problema al enviar la notificación.", "warning")
+
         return redirect(url_for('catalogo'))
-    
-    # Esto maneja el GET (cuando el usuario entra a ver el formulario)
+
+    # Si es GET: Pasamos 'ref' al template para que el formulario lo pinte
     ref = request.args.get('ref')
     return render_template('contacto.html', ref=ref)
 
-print("Estoy en la carpeta:", os.getcwd())
-print("Contenido de templates:", os.listdir('templates'))
 
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 def editar_inmueble(id):
@@ -183,6 +231,9 @@ def eliminar_inmueble(id):
     db.session.delete(inmueble)
     db.session.commit()
     return redirect(url_for('catalogo'))
+
+
+
 
 
 if __name__ == '__main__':
