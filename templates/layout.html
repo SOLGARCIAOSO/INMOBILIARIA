@@ -10,14 +10,16 @@
 </head>
 <body>
 
-    <div id="cookie-consent" class="cookie-alert">
-        <div class="cookie-content">
-            <h2>Política de Privacidad</h2>
-            <p>Usamos cookies para mejorar tu experiencia. Al navegar, aceptas nuestra política.</p>
-            <button type="button" id="accept-cookies" class="btn-primary">Aceptar</button>
-            <a href="{{ url_for('politicas') }}">Ver Políticas</a>
+    {% if not current_user.is_authenticated or current_user.rol != 'admin' %}
+        <div id="cookie-consent" class="cookie-alert">
+            <div class="cookie-content">
+                <h2>Política de Privacidad</h2>
+                <p>Usamos cookies para mejorar tu experiencia. Al navegar, aceptas nuestra política.</p>
+                <button type="button" id="accept-cookies" class="btn-primary">Aceptar</button>
+                <a href="{{ url_for('politicas') }}">Ver Políticas</a>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <button class="menu-toggle" aria-label="Abrir menú">
         <i data-lucide="menu"></i>
@@ -30,9 +32,27 @@
                 <li><a href="/">Inicio</a></li>
                 <li><a href="/quienes-somos">Quiénes Somos</a></li>
                 <li><a href="/catalogo">Catálogo</a></li>
-                
                 <li><a href="/politicas">Políticas</a></li>
-                <li><a href="/inmueble_form" style="color: var(--accent-gold);">Registrar Inmueble</a></li>
+
+                {% if current_user.is_authenticated %}
+                    {% if current_user.rol == 'admin' %}
+                        <li style="margin-top: 20px; border-top: 1px solid #444; padding-top: 10px;">
+                            <a href="/inmueble_form" style="color: var(--accent-gold);">Registrar Inmueble</a>
+                        </li>
+                        <li><a href="/admin/registrar-usuario">Gestionar Asesor/Usuario</a></li>
+                    {% endif %}
+                    
+                    <li style="margin-top: 10px;">
+                        <a href="{{ url_for('logout') }}" style="color: #ff6b6b;">Cerrar Sesión</a>
+                    </li>
+                    <li style="font-size: 0.8em; color: #888; padding-left: 15px;">
+                        Asesor: {{ current_user.username }}
+                    </li>
+                {% else %}
+                    <li style="margin-top: 20px; border-top: 1px solid #444; padding-top: 10px;">
+                        <a href="{{ url_for('login_page') }}" style="color: var(--accent-gold); font-weight: bold;">Acceso Asesor</a>
+                    </li>
+                {% endif %} 
             </ul>
         </nav>
 
@@ -51,37 +71,17 @@
         </main>
     </div>
 
-   <footer>
-    <div class="footer-container" style="font-family: 'Poppins', sans-serif; text-align: center; padding: 20px;">
-        <h3>INFORMACIÓN CORPORATIVA</h3>
-        <p><strong>Capital Group Inmobiliaria & Inversiones</strong><br>
-        Subdivisión Estratégica de Claros Epoxy S.A.S. | NIT 901675586-9</p>
-        
-        <div class="footer-links">
-            <span style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                <i data-lucide="map-pin" style="width: 18px; height: 18px;"></i> Bogotá D.C. - Colombia
-            </span>
+    <footer>
+        <div class="footer-container" style="font-family: 'Poppins', sans-serif; text-align: center; padding: 20px;">
+            <h3>INFORMACIÓN CORPORATIVA</h3>
+            <p><strong>Capital Group Inmobiliaria & Inversiones</strong><br>
+            Subdivisión Estratégica de Claros Epoxy S.A.S. | NIT 901675586-9</p>
+            <p class="copyright" style="margin-top: 15px; font-size: 0.8em; color: #666;">Todos los derechos reservados &copy; 2026</p>
         </div>
-
-        <div class="social-media" style="margin-top: 15px;">
-            <p>Síguenos en nuestras redes:</p>
-            <div class="social-links" style="display: flex; justify-content: center; gap: 20px;">
-                <a href="https://www.instagram.com/cg_capital.group" target="_blank" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit;">
-                    <i data-lucide="instagram" style="width: 18px; height: 18px;"></i> Instagram
-                </a>
-                <a href="https://www.tiktok.com/@cg_capital.group" target="_blank" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit;">
-                    <i data-lucide="music" style="width: 18px; height: 18px;"></i> TikTok
-                </a>
-            </div>
-        </div>
-        
-        <p class="copyright" style="margin-top: 15px; font-size: 0.8em; color: #666;">Todos los derechos reservados &copy; 2026</p>
-    </div>
-</footer>
+    </footer>
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
-        // Inicializa todos los iconos data-lucide presentes
         lucide.createIcons();
     </script>
     

@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, abort
 from config import Config
 from flask_mail import Mail, Message
 
 from modelos_db import db, Inmueble, Contacto, Imagen, User
 import os
-from werkzeug.utils import secure_filename
+from werkzeug.security import check_password_hash
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user 
+
 
 app = Flask(__name__, template_folder='templates')
 
@@ -27,6 +29,15 @@ app.config['MAIL_PASSWORD'] = 'vjfmqpkqhdnjgpam'
 app.config['MAIL_DEFAULT_SENDER'] = 'garciaosorio04@gmail.com'
 
 mail = Mail(app)
+
+# --- CONFIGURACIÓN DE FLASK-LOGIN ---
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login_page'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # 2. Inicializar DB UNA SOLA VEZ
 db.init_app(app)
@@ -197,7 +208,12 @@ def contacto():
 
 
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
+@login_required # Solo usuarios logueados
 def editar_inmueble(id):
+    # Verificación de seguridad: solo admins
+    if current_user.rol != 'admin':
+        abort(403) # Acceso prohibido
+
     inmueble = Inmueble.query.get_or_404(id) 
 
     if request.method == 'POST':
@@ -229,14 +245,76 @@ def editar_inmueble(id):
     return render_template('inmueble_form.html', inmueble=inmueble)
 
 @app.route('/eliminar/<int:id>')
+@login_required # Solo usuarios logueados
 def eliminar_inmueble(id):
+    # Verificación de seguridad: solo admins
+    if current_user.rol != 'admin':
+        abort(403) # Acceso prohibido
+
     inmueble = Inmueble.query.get_or_404(id)
     db.session.delete(inmueble)
     db.session.commit()
     return redirect(url_for('catalogo'))
 
 
+# --- RUTAS DE AUTENTICACIÓN ---
 
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        
+        # Consultamos el usuario
+        user = User.query.filter_by(email=email).first()
+
+        if user:
+            # DEBUG: Imprimimos en la consola del servidor para ver qué está pasando
+            print(f"DEBUG: Usuario encontrado: {user.username}")
+            print(f"DEBUG: Hash en BD: {user.password_hash}")
+            
+            # Verificamos la contraseña
+            if check_password_hash(user.password_hash, password):
+                login_user(user)
+                print(f"DEBUG: Login exitoso para {user.username}. Redirigiendo...")
+                flash('Bienvenido', 'success')
+                return redirect(url_for('inicio'))
+            else:
+                print("DEBUG: La contraseña no coincide con el hash.")
+                flash('Contraseña incorrecta.', 'danger')
+        else:
+            print(f"DEBUG: No se encontró ningún usuario con el correo: {email}")
+            flash('Usuario no encontrado.', 'danger')
+            
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        if User.query.filter_by(email=email).first():
+            flash('El correo ya está registrado.', 'danger')
+            return redirect(url_for('register'))
+
+        new_user = User(username=username, email=email, rol='usuario')
+        new_user.set_password(password)
+        db.session.add(new_user)
+        db.session.commit()
+        
+        flash('¡Registro exitoso! Ya puedes iniciar sesión.', 'success')
+        return redirect(url_for('login_page'))
+        
+    return render_template('register.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Has cerrado sesión.', 'info')
+    return redirect(url_for('inicio'))
 
 
 if __name__ == '__main__':
