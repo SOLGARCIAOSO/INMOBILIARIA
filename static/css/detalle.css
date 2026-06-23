@@ -135,3 +135,52 @@
     background-color: #162d5a; /* Tu azul hover */
     transform: scale(1.02);   /* Un pequeño efecto al pasar el mouse */
 }
+
+/* Contenedor para centrar el botón */
+.interes-container {
+    text-align: center;
+    margin: 40px 0;
+}
+
+/* Estilo Premium del botón */
+.btn-interes-premium {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: var(--primary-blue); /* Tu azul corporativo */
+    color: #ffffff;
+    padding: 18px 40px;
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(11, 30, 66, 0.2);
+}
+
+.btn-interes-premium:hover {
+    background-color: var(--accent-gold); /* Tu dorado corporativo */
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(197, 160, 89, 0.3);
+}
+
+/* Opcional: Para asegurar que el ícono tenga espacio */
+.btn-interes-premium i {
+    width: 20px;
+    height: 20px;
+}
+
+.simulador-container {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 30px;
+}
+.simulador-grid { display: grid; gap: 20px; margin-bottom: 20px; }
+.resultados-credito { 
+    display: flex; justify-content: space-between; 
+    background: #fff; padding: 15px; border-radius: 10px;
+    border: 1px solid #e1e1e1;
+}
+input[type=range] { width: 100%; accent-color: var(--primary-blue); }

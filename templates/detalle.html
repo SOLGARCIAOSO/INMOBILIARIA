@@ -23,6 +23,12 @@
         {% endif %}
     </div>
 
+<div class="interes-container">
+    <a href="{{ url_for('contacto', ref=inmueble.id) }}" class="btn-interes-premium">
+        <i data-lucide="info"></i> Deseo más información sobre este inmueble
+    </a>
+</div>
+
     <div class="accordion">
         <div class="accordion-item">
             <button class="accordion-header">Descripción General <i data-lucide="chevron-down"></i></button>
@@ -68,9 +74,7 @@
         
         <div class="contacto-opciones">
 
-<a href="{{ url_for('contacto', ref=inmueble.id) }}" class="btn-interes">
-    Deseo más información sobre este inmueble
-</a>
+
 
             <a href="https://wa.me/573225903484" target="_blank" class="opcion-contacto whatsapp">
                 <i data-lucide="message-circle"></i>
@@ -92,6 +96,36 @@
 
     
 </div>
+
+<div class="simulador-container" id="simulador-credito" data-precio="{{ inmueble.precio }}">
+    <h3>Simulador de Crédito</h3>
+    <div class="simulador-grid">
+        <div class="simulador-item">
+            <label>Cuota Inicial: <span id="val-ci">30%</span></label>
+            <input type="range" id="slider-ci" min="10" max="80" step="5" value="30">
+        </div>
+        <div class="simulador-item">
+            <label>Plazo: <span id="val-plazo">5 años</span></label>
+            <input type="range" id="slider-plazo" min="5" max="20" step="1" value="5">
+        </div>
+        <div class="simulador-item">
+            <label>Tasa M.V.: <span id="val-tasa">0.8%</span></label>
+            <input type="range" id="slider-tasa" min="0.8" max="1.5" step="0.1" value="0.8">
+        </div>
+    </div>
+
+    <div class="resultados-credito">
+        <p>Cuota mensual: <strong id="res-cuota">$0</strong></p>
+        <p>Valor crédito: <strong id="res-credito">$0</strong></p>
+        <p>Cuota inicial: <strong id="res-ci">$0</strong></p>
+    </div>
+    
+    <p class="disclaimer">
+        <small>* Los valores calculados son una estimación y no constituyen una oferta comercial. Las tasas de interés están sujetas a cambios y dependen de la aprobación del crédito y las políticas de la entidad financiera.</small>
+    </p>
+</div>
+
+
 {% endblock %}
 
 {% block extra_js %}

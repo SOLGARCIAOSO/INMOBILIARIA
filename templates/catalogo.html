@@ -21,9 +21,10 @@
                 </div>
 
                 <div class="card-body">
-                    <span class="badge">{{ inmueble.estado or 'Disponible' }}</span>
-                    
-                    <h3>{{ inmueble.titulo }}</h3>
+                    <div class="header-card">
+                        <span class="badge">{{ inmueble.estado or 'Disponible' }}</span>
+                        <h3>{{ inmueble.titulo }}</h3>
+                    </div>
                     <p class="precio"><strong>${{ "{:,.0f}".format(inmueble.precio) }}</strong></p>
                     <p class="ciudad">{{ inmueble.ubicacion }}</p>
                     
@@ -35,13 +36,13 @@
                     
                     <a href="{{ url_for('detalle_inmueble', id=inmueble.id) }}" class="btn-contacto">Ver detalles</a>
                     
-                    <div class="admin-actions" style="margin-top: 15px; display: flex; gap: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+                    <div class="admin-actions">
                         <a href="{{ url_for('editar_inmueble', id=inmueble.id) }}" class="admin-btn edit-btn">
                             <i data-lucide="edit-2"></i> Editar
                         </a>
                         <button type="button" 
                                 onclick="confirmarEliminacion('{{ inmueble.id }}', '{{ inmueble.titulo }}')" 
-                                class="admin-btn edit-btn">
+                                class="admin-btn delete-btn"> <!-- Cambiado de edit-btn a delete-btn -->
                             <i data-lucide="trash-2"></i> Eliminar
                         </button>
                     </div>

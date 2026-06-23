@@ -1,7 +1,7 @@
 :root {
     --primary-blue: #0b1e42;
     --accent-gold: #c5a059;
-    --bg-page: #eef2f7; /* Azul grisáceo muy suave para el fondo */
+    --bg-page: #eef2f7;
     --text-dark: #2d3436;
 }
 
@@ -11,13 +11,13 @@ body {
 }
 
 .form-container {
-    max-width: 600px; /* Un poco más amplio para mayor comodidad */
+    max-width: 600px;
     margin: 50px auto;
     padding: 40px;
     background: #fff;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-    border-top: 6px solid var(--primary-blue); /* Toque de marca superior */
+    border-top: 6px solid var(--primary-blue);
 }
 
 .form-container h2 {
@@ -47,28 +47,64 @@ body {
 
 .form-container input:focus, .form-container textarea:focus {
     outline: none;
-    border-color: var(--accent-gold); /* El borde cambia a dorado al enfocar */
+    border-color: var(--accent-gold);
     background-color: #fff;
     box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1);
 }
 
+/* Grupo de botones */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+/* Estilos de botones */
 .btn-submit {
-    background: var(--primary-blue); /* Azul corporativo */
+    flex: 1;
+    background: var(--primary-blue);
     color: #fff;
     font-weight: 600;
     padding: 16px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    width: 100%;
-    margin-top: 25px;
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .btn-submit:hover {
-    background: var(--accent-gold); /* Dorado al pasar el mouse */
+    background: var(--accent-gold);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);
+}
+
+/* Estilo específico para el botón de mensaje rápido */
+.btn-quick {
+    flex: 1;
+    background: var(--accent-gold);
+    color: #fff;
+    font-weight: 600;
+    padding: 16px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-quick:hover {
+    background: var(--primary-blue);
+}
+
+/* Ajuste responsivo para móviles */
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .button-group {
+        flex-direction: column;
+    }
 }

@@ -1,21 +1,38 @@
 {% extends 'layout.html' %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='contacto.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contacto.css') }}">
 {% endblock %}
+
 {% block content %}
-<div class="contacto-form">
-    <h2>Formulario de contacto</h2>
-    <p>¿Interesado en este inmueble? Déjanos tus datos.</p>
-    
-    <form action="/contacto" method="POST">
-        <input type="hidden" name="inmueble_id" value="{{ ref }}">
+<div class="contacto-container">
+    <div class="form-container">
+        <h2>Solicitud de Información</h2>
+        <p>¿Interesado en este inmueble? Déjanos tus datos.</p>
         
-        <input type="text" name="nombre" placeholder="Nombre completo" required>
-        <input type="email" name="email" placeholder="Correo electrónico" required>
-        <textarea name="mensaje" placeholder="Escribe aquí tu comentario (opcional)"></textarea>
-        
-        <button type="submit">Enviar Solicitud</button>
-    </form>
+        <form action="/contacto" method="POST">
+            <input type="hidden" name="inmueble_id" value="{{ ref }}">
+            
+            <div class="form-row">
+                <input type="text" name="nombre" placeholder="Nombre completo" required>
+                <input type="tel" name="telefono" placeholder="Teléfono" required>
+            </div>
+            
+            <input type="email" name="email" placeholder="Correo electrónico (opcional)">
+            
+            <textarea id="mensajeArea" name="mensaje" rows="4" placeholder="Escribe aquí alguna pregunta específica que tengas"></textarea>
+            
+            <div class="button-group">
+                <button type="submit" class="btn-submit">Enviar Solicitud</button>
+                <button type="button" class="btn-quick" onclick="setMensaje()">Mensaje rápido</button>
+            </div>
+        </form>
+    </div>
 </div>
+
+<script>
+    function setMensaje() {
+        document.getElementById('mensajeArea').value = "Estoy interesad@ en la compra de esta propiedad";
+    }
+</script>
 {% endblock %}

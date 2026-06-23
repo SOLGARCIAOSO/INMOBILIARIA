@@ -6,34 +6,25 @@
 
 .catalogo-container {
     padding: 20px;
-    width: 90% !important;   /* Reduce el ancho total al 90% del espacio disponible */
-    max-width: 1200px !important; /* Limita el crecimiento máximo para que no se estiren infinitamente */
-    margin: 0 auto !important;    /* Centra el contenedor en la pantalla */
+    width: 90%; 
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .grid-inmuebles {
-    display: grid !important;
-    /* Ajustamos el minmax a 300px. Si quieres que sean más pequeñas, aumenta este valor (ej. 350px) */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
-    gap: 30px !important;
-    width: 100% !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
 }
 
 .card {
-    /* IMPORTANTE: Quitamos el width: 100% si lo tenías, 
-       o lo dejamos pero permitimos que el grid lo controle */
     background: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    /* Aseguramos que no tenga un max-width que la fuerce a ser gigante */
-    max-width: 100%; 
+    border-radius: 12px; /* Un toque más moderno */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    overflow: hidden; /* Importante para que la imagen no rompa los bordes */
     display: flex;
     flex-direction: column;
-}
-
-.grid-inmuebles > .card {
-    margin: 0; /* Asegura que la tarjeta no tenga márgenes externos que interfieran con el gap */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover { 
@@ -44,7 +35,6 @@
 .card-image { 
     width: 100%; 
     height: 220px; 
-    flex-shrink: 0;
 }
 
 .img-inmueble { 
@@ -58,31 +48,36 @@
     flex-grow: 1; 
 }
 
-/* Tipografía y colores */
-.card-body h3 { 
-    margin: 0 0 10px 0; 
+/* NUEVA ESTRUCTURA PARA EL TÍTULO Y BADGE */
+.header-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.header-card h3 { 
+    margin: 0; 
     color: var(--primary-blue); 
     font-size: 1.25rem;
+}
+
+.badge {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
     font-weight: 600;
+    text-transform: uppercase;
 }
 
 .card-body .precio { 
     font-size: 1.3rem; 
     color: var(--accent-gold); 
     font-weight: 700; 
-    margin-bottom: 15px; 
+    margin-bottom: 10px; 
     display: block;
-}
-
-.badge {
-    background-color: var(--primary-blue);
-    color: white;
-    padding: 5px 12px;
-    border-radius: 20px; /* Badge redondeado */
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .card-details {
@@ -95,43 +90,74 @@
     margin-top: 15px;
 }
 
+/* Responsividad */
+@media (max-width: 1024px) {
+    .grid-inmuebles { grid-template-columns: repeat(2, 1fr); }
+}
 
+@media (max-width: 600px) {
+    .grid-inmuebles { grid-template-columns: 1fr; }
+}
 
-/*                   */
-/* Contenedor de botones */
-/* Base de los botones */
+/* --- AÑADE ESTO AL FINAL DE TU ARCHIVO --- */
+
+/* Botón "Ver detalles" */
+.btn-contacto {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: var(--primary-blue);
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+}
+
+.btn-contacto:hover {
+    background-color: var(--accent-gold);
+}
+
+/* Acciones de Admin (Editar/Eliminar) */
+.admin-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 15px;
+    justify-content: flex-start;
+}
+
 .admin-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     text-decoration: none;
-    font-weight: 600;
-    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
     background: none;
     border: none;
-    padding: 5px 0;
-    color: #1e3a8a; /* AZUL OSCURO */
-    font-size: 14px;
-    font-family: inherit;
+    cursor: pointer;
+    transition: opacity 0.2s;
 }
 
-.admin-btn i {
-    width: 18px;
-    height: 18px;
+/* Colores específicos para admin */
+.edit-btn { 
+    color: var(--primary-blue); 
+}
+
+.delete-btn { 
+    color: #c0392b; /* Rojo para eliminar */
 }
 
 .admin-btn:hover {
     opacity: 0.7;
 }
 
-@media (max-width: 1024px) {
-    .grid-inmuebles {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablets */
-    }
-}
-
-@media (max-width: 600px) {
-    .grid-inmuebles {
-        grid-template-columns: 1fr; /* 1 columna en móviles */
-    }
+.admin-btn i {
+    width: 16px;
+    height: 16px;
 }

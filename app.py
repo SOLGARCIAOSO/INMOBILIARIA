@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from config import Config
 from flask_mail import Mail, Message
 
-from modelos_db import db, Inmueble, Contacto, Imagen
+from modelos_db import db, Inmueble, Contacto, Imagen, User
 import os
 from werkzeug.utils import secure_filename
 
@@ -139,6 +139,7 @@ def contacto():
     if request.method == 'POST':
         # 1. Captura de datos
         nombre = request.form.get('nombre')
+        telefono = request.form.get('telefono')  # Nuevo campo
         email = request.form.get('email')
         mensaje = request.form.get('mensaje')
         inmueble_id_str = request.form.get('inmueble_id')
@@ -154,6 +155,7 @@ def contacto():
         try:
             nuevo_contacto = Contacto(
                 nombre=nombre,
+                telefono=telefono,
                 email=email,
                 mensaje=mensaje,
                 inmueble_id=inmueble_id
@@ -176,6 +178,7 @@ def contacto():
             <h3>Nueva solicitud de información</h3>
             <p><b>Cliente:</b> {nombre}</p>
             <p><b>Email:</b> {email}</p>
+            <p><b>Teléfono:</b> {telefono}</p>
             <p><b>Propiedad ID:</b> {inmueble_id}</p>
             <p><b>Mensaje:</b> {mensaje if mensaje else 'El usuario solicita más información.'}</p>
             """
