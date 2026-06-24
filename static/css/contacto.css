@@ -1,80 +1,78 @@
-/* --- Estilos unificados para contacto.css --- */
+/* --- Estilos para contacto.css --- */
 
-:root {
-    --primary-blue: #0b1e42;
-    --accent-gold: #c5a059;
-    --bg-page: #eef2f7;
-}
-
+/* Contenedor principal para dar aire respecto al menú lateral */
 .contacto-container {
-    max-width: 650px;
-    margin: 40px auto;
-    padding: 0 20px;
+    max-width: 600px;
+    margin: 40px auto; /* Centra el formulario y lo separa de arriba/abajo */
+    padding: 0 20px;   /* Espaciado interno para pantallas pequeñas */
 }
 
-/* Contenedor tipo "Card" como en tu imagen de registro */
-.form-container {
-    background: #fff;
+/* El bloque del formulario */
+.contacto-form {
+    background: #ffffff;
     padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    border-top: 6px solid var(--primary-blue);
+    border-radius: 16px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-.form-container h2 {
+.contacto-form h2 {
     color: var(--primary-blue);
-    margin-bottom: 20px;
-    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
 }
 
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+.contacto-form p {
+    color: #666;
+    margin-bottom: 30px;
 }
 
-.form-container input, .form-container textarea {
+/* Inputs y Textarea */
+.contacto-form input, 
+.contacto-form textarea {
     width: 100%;
     padding: 14px;
-    margin: 8px 0;
-    border: 1px solid #e1e1e1;
-    border-radius: 12px;
-    background-color: #f9f9f9;
-    box-sizing: border-box;
+    margin-bottom: 20px;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
     font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-sizing: border-box; /* Asegura que el padding no rompa el ancho */
+    transition: border-color 0.3s ease;
 }
 
-.form-container input:focus, .form-container textarea:focus {
+.contacto-form input:focus, 
+.contacto-form textarea:focus {
     outline: none;
-    border-color: var(--accent-gold);
-    background-color: #fff;
-    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1);
+    border-color: var(--accent-gold); /* Detalle dorado al escribir */
 }
 
-.button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+.contacto-form textarea {
+    height: 150px;
+    resize: vertical;
 }
 
-.btn-submit, .btn-quick {
-    flex: 1;
-    padding: 14px;
+/* Botón de envío */
+.contacto-form button {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--primary-blue);
+    color: #ffffff;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     font-weight: 600;
+    font-size: 1rem;
     cursor: pointer;
-    transition: 0.3s;
-    color: white;
+    transition: background 0.3s ease;
 }
 
-.btn-submit { background-color: var(--primary-blue); }
-.btn-submit:hover { background-color: var(--accent-gold); }
+.contacto-form button:hover {
+    background-color: var(--hover-bg);
+}
 
-.btn-quick { background-color: var(--accent-gold); }
-.btn-quick:hover { background-color: var(--primary-blue); }
-
+/* Ajuste responsivo */
 @media (max-width: 600px) {
-    .form-row { grid-template-columns: 1fr; }
+    .contacto-form {
+        padding: 25px;
+    }
 }
