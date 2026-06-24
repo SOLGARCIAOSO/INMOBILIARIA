@@ -51,9 +51,9 @@
             <option value="Vendido" {{ 'selected' if inmueble and inmueble.estado == 'Vendido' }}>Vendido</option>
         </select>
 
-        <label style="margin-top: 15px; display: block;">Imágenes (6 espacios):</label>
+        <label style="margin-top: 15px; display: block;">Imágenes (8 espacios):</label>
             <div class="galeria-edicion" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
-                {% for i in range(6) %}
+                {% for i in range(8) %}
                     <div class="img-slot" id="slot-{{ i }}" style="border: 1px dashed #ccc; padding: 10px; text-align: center; border-radius: 8px;">
                         {% if inmueble and i < inmueble.imagenes|length %}
                             <div id="wrapper-{{ inmueble.imagenes[i].id }}">

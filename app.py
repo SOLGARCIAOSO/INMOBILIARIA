@@ -6,7 +6,8 @@ from modelos_db import db, Inmueble, Contacto, Imagen, User
 import os
 from werkzeug.security import check_password_hash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user 
-
+import requests
+import base64
 
 app = Flask(__name__, template_folder='templates')
 
@@ -15,7 +16,7 @@ app.config.from_object(Config)
 
 # Asegurar configuración clave
 app.secret_key = 'una_clave_muy_secreta_y_larga'
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
 
 # Configuración de Flask-Mail
 # --- Configuración para enviar correos REALES desde Gmail ---
@@ -39,6 +40,28 @@ login_manager.login_view = 'login_page'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
+def subir_a_imgbb(archivo):
+    # Convertimos la imagen a base64 para enviarla a la API
+    # Esto es necesario para que cualquier tipo de imagen viaje como texto
+    image_base64 = base64.b64encode(archivo.read()).decode('utf-8')
+    
+    url = "https://api.imgbb.com/1/upload"
+    payload = {
+        "key": "45236911f98cd3e6309831e1f90bd1b6", # <--- Pega aquí tu API Key
+        "image": image_base64
+    }
+    
+    # Enviamos la imagen a ImgBB
+    response = requests.post(url, payload)
+    data = response.json()
+    
+    if data['success']:
+        # Si todo sale bien, devolvemos la URL pública
+        return data['data']['url']
+    else:
+        return None
+
 # 2. Inicializar DB UNA SOLA VEZ
 db.init_app(app)
 
@@ -49,9 +72,6 @@ with app.app_context():
     #db.drop_all() 
     db.create_all()
     
-    # Crear carpeta de subidas si no existe
-    if not os.path.exists(app.config['UPLOAD_FOLDER']):
-        os.makedirs(app.config['UPLOAD_FOLDER'])
 
 # --- RUTAS ---
 
@@ -128,20 +148,21 @@ def guardar_inmueble():
     db.session.commit() # Importante: commit aquí para que nuevo_inmueble tenga su ID
     
     # 2. Procesar imágenes con nombres únicos
-    for i in range(6):
-            archivo = request.files.get(f'imagen_{i}') # Buscamos imagen_0, imagen_1...
-            if archivo and archivo.filename != '':
-                timestamp = str(int(time.time()))
-                nombre_archivo = f"{timestamp}_{i}_{secure_filename(archivo.filename)}"
-                
-                ruta_guardado = os.path.join(app.config['UPLOAD_FOLDER'], nombre_archivo)
-                archivo.save(ruta_guardado)
-                
-                nueva_imagen = Imagen(ruta=nombre_archivo, inmueble_id=nuevo_inmueble.id)
+    for i in range(8):
+        archivo = request.files.get(f'imagen_{i}')
+        if archivo and archivo.filename != '':
+            # Llamamos a la función auxiliar que creamos
+            url_imagen = subir_a_imgbb(archivo)
+            
+            if url_imagen:
+                # Guardamos la URL pública (no el nombre de archivo local)
+                nueva_imagen = Imagen(ruta=url_imagen, inmueble_id=nuevo_inmueble.id)
                 db.session.add(nueva_imagen)
+            else:
+                flash(f"No se pudo subir la imagen {i+1} a la nube.", "warning")
         
-    db.session.commit()
-    flash("Inmueble guardado.", "success")
+    db.session.commit() # Confirmamos el guardado de todas las URLs
+    flash("Inmueble y sus imágenes guardados correctamente.", "success")
     return redirect(url_for('catalogo'))
 
 

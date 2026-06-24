@@ -16,7 +16,11 @@
     <div class="galeria-grid">
         {% if inmueble.imagenes %}
             {% for img in inmueble.imagenes %}
-                <img src="{{ url_for('static', filename='uploads/' + img.ruta) }}" class="gallery-item" alt="Imagen {{ loop.index }}">
+                {% set ruta_img = img.ruta %}
+                
+                <img src="{% if ruta_img.startswith('http') %}{{ ruta_img }}{% else %}{{ url_for('static', filename='uploads/' + ruta_img) }}{% endif %}" 
+                    class="gallery-item" 
+                    alt="Imagen {{ loop.index }}">
             {% endfor %}
         {% else %}
             <p>No se encontraron imágenes asociadas.</p>

@@ -13,8 +13,11 @@
             <div class="card">
                 <div class="card-image">
                     {% if inmueble.imagenes and inmueble.imagenes|length > 0 %}
-                        <img src="{{ url_for('static', filename='uploads/' + inmueble.imagenes[0].ruta) }}" 
-                             alt="{{ inmueble.titulo }}" class="img-inmueble">
+                        {% set ruta_img = inmueble.imagenes[0].ruta %}
+                        
+                        <img src="{% if ruta_img.startswith('http') %}{{ ruta_img }}{% else %}{{ url_for('static', filename='uploads/' + ruta_img) }}{% endif %}" 
+                            alt="{{ inmueble.titulo }}" class="img-inmueble">
+                            
                     {% else %}
                         <div class="no-image">Sin imagen</div>
                     {% endif %}
