@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 
 {% block extra_css %}
@@ -6,99 +7,184 @@
 
 {% block content %}
 <div class="detalle-container">
-    
-    <header class="detalle-header">
-        <h1 class="titulo-inmueble">{{ inmueble.titulo }}</h1>
-        <p class="precio-inmueble">$ {{ "{:,.0f}".format(inmueble.precio) }} COP</p>
-        <p class="ubicacion"><i data-lucide="map-pin"></i> {{ inmueble.direccion }}, {{ inmueble.localidad }}, {{ inmueble.ciudad }}</p>
-    </header>
 
-    <div class="galeria-grid">
-        {% if inmueble.imagenes %}
-            {% for img in inmueble.imagenes %}
-                {% set ruta_img = img.ruta %}
-                
-                <img src="{% if ruta_img.startswith('http') %}{{ ruta_img }}{% else %}{{ url_for('static', filename='uploads/' + ruta_img) }}{% endif %}" 
-                    class="gallery-item" 
-                    alt="Imagen {{ loop.index }}">
-            {% endfor %}
-        {% else %}
-            <p>No se encontraron imágenes asociadas.</p>
-        {% endif %}
+    <!-- Breadcrumb -->
+    <div class="det-breadcrumb">
+        <a href="/">Inicio</a> 
+        <a href="{{ url_for('catalogo') }}">Catálogo</a> 
+        <span>{{ inmueble.titulo }}</span>
     </div>
 
-<div class="interes-container">
-    <a href="{{ url_for('contacto', ref=inmueble.id) }}" class="btn-interes-premium">
-        <i data-lucide="info"></i> Deseo más información sobre este inmueble
-    </a>
+    <!-- Galería -->
+    <div class="galeria-grid">
+    <span class="galeria-badge">{{ inmueble.estado or 'Disponible' }}</span>
+
+    {% if inmueble.imagenes %}
+        {% for img in inmueble.imagenes %}
+            {# DEFINES LA RUTA AQUÍ UNA SOLA VEZ #}
+            {% set url_final = img.ruta if img.ruta.startswith('http') else url_for('static', filename='uploads/' + img.ruta) %}
+
+            {% if loop.last and not loop.first %}
+                <div class="gal-ver-mas">
+                    {# USAS LA VARIABLE url_final #}
+                    <img src="{{ url_final }}" class="gallery-item" alt="Imagen {{ loop.index }}" loading="lazy">
+                    <div class="gal-overlay">
+                        <div class="gal-contador">
+                            <span class="gal-num">+{{ inmueble.imagenes|length - 2 }}</span>
+                            <span class="gal-label">fotos</span>
+                            <div class="gal-dots">
+                                {% for _ in inmueble.imagenes %}
+                                <span class="gal-dot {% if loop.index <= 2 %}activo{% endif %}"></span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                {# USAS LA VARIABLE url_final #}
+                <img src="{{ url_final }}" class="gallery-item" alt="Imagen {{ loop.index }}" loading="lazy">
+            {% endif %}
+        {% endfor %}
+
+        {% if inmueble.imagenes|length > 2 %}
+        <span class="galeria-badge-bottom">+{{ inmueble.imagenes|length - 2 }} fotos</span>
+        {% endif %}
+
+    {% else %}
+        <div class="no-image">
+            <i data-lucide="home" style="width:64px;height:64px;"></i>
+        </div>
+    {% endif %}
 </div>
 
-    <div class="accordion">
-        <div class="accordion-item">
-            <button class="accordion-header">Descripción General <i data-lucide="chevron-down"></i></button>
-            <div class="accordion-content">
-                <p>{{ inmueble.descripcion }}</p>
+
+
+    <!-- Body 2 columnas -->
+    <div class="det-body">
+
+        <!-- Izquierda -->
+        <div class="det-left">
+            <p class="det-tag">{{ inmueble.tipo_inmueble or 'Inmueble' }} en venta</p>
+            <h1 class="titulo-inmueble">{{ inmueble.titulo }}</h1>
+            <p class="ubicacion">
+                <i data-lucide="map-pin"></i>
+                {{ inmueble.direccion }}{% if inmueble.localidad %}, {{ inmueble.localidad }}{% endif %}, {{ inmueble.ciudad }}
+            </p>
+
+            <div class="det-precio-box">
+                <p class="det-precio-label">Valor de compra</p>
+                <p class="precio-inmueble">${{ "{:,.0f}".format(inmueble.precio) }} COP</p>
             </div>
+
+            <div class="det-pills">
+                {% if inmueble.area %}<span class="pill"><i data-lucide="maximize-2"></i> {{ inmueble.area }} m²</span>{% endif %}
+                {% if inmueble.habitaciones %}<span class="pill"><i data-lucide="bed"></i> {{ inmueble.habitaciones }} Hab.</span>{% endif %}
+                {% if inmueble.banos %}<span class="pill"><i data-lucide="droplets"></i> {{ inmueble.banos }} Baños</span>{% endif %}
+                {% if inmueble.cantidad_garajes %}<span class="pill"><i data-lucide="car"></i> {{ inmueble.cantidad_garajes }} Parq.</span>{% endif %}
+                {% if inmueble.estrato %}<span class="pill"><i data-lucide="layers"></i> Estrato {{ inmueble.estrato }}</span>{% endif %}
+                {% if inmueble.antiguedad %}<span class="pill"><i data-lucide="calendar"></i> {{ inmueble.antiguedad }} años</span>{% endif %}
+            </div>
+
+            <div class="det-section">
+                <h2 class="det-section-title">Descripción</h2>
+                <p class="det-descripcion">{{ inmueble.descripcion }}</p>
+            </div>
+
+            <div class="det-section">
+                <h2 class="det-section-title">Características</h2>
+                <div class="caract-grid">
+                    <div class="caract-item"><small>Tipo</small><p>{{ inmueble.tipo_inmueble or '—' }}</p></div>
+                    <div class="caract-item"><small>Área</small><p>{{ inmueble.area or '—' }} m²</p></div>
+                    <div class="caract-item"><small>Antigüedad</small><p>{{ inmueble.antiguedad or '—' }} años</p></div>
+                    <div class="caract-item"><small>Habitaciones</small><p>{{ inmueble.habitaciones or '—' }}</p></div>
+                    <div class="caract-item"><small>Baños</small><p>{{ inmueble.banos or '—' }}</p></div>
+                    <div class="caract-item"><small>Garajes</small><p>{{ inmueble.cantidad_garajes or '—' }}</p></div>
+                    <div class="caract-item"><small>Depósito</small><p>{{ 'Sí' if inmueble.deposito else 'No' }}</p></div>
+                    <div class="caract-item"><small>Portería</small><p>{{ 'Sí' if inmueble.porteria else 'No' }}</p></div>
+                    <div class="caract-item"><small>Gas Natural</small><p>{{ 'Sí' if inmueble.gas else 'No' }}</p></div>
+                    <div class="caract-item"><small>Remodelado</small><p>{{ 'Sí' if inmueble.remodelado else 'No' }}</p></div>
+                    <div class="caract-item"><small>Parqueadero</small><p>{{ 'Sí' if inmueble.parqueadero else 'No' }}</p></div>
+                    <div class="caract-item"><small>Lavandería</small><p>{{ 'Sí' if inmueble.zona_lavanderia else 'No' }}</p></div>
+                </div>
+            </div>
+
+            {% if inmueble.enlace_maps %}
+            <div class="det-section">
+                <h2 class="det-section-title">Ubicación</h2>
+                <a href="{{ inmueble.enlace_maps }}" target="_blank" class="btn-maps">
+                    <i data-lucide="map-pin"></i> Ver ubicación en Google Maps
+                </a>
+            </div>
+            {% endif %}
         </div>
 
-        <div class="accordion-item">
-            <button class="accordion-header">Detalles del inmueble <i data-lucide="chevron-down"></i></button>
-            <div class="accordion-content">
-                <div class="details-grid">
-                    <div class="info-card"><i data-lucide="home" class="info-icon"></i> <div><small>Tipo</small><p>{{ inmueble.tipo_inmueble }}</p></div></div>
-                    <div class="info-card"><i data-lucide="calendar" class="info-icon"></i> <div><small>Antigüedad</small><p>{{ inmueble.antiguedad }} años</p></div></div>
-                    <div class="info-card"><i data-lucide="layers" class="info-icon"></i> <div><small>Estrato</small><p>{{ inmueble.estrato }}</p></div></div>
-                    <div class="info-card"><i data-lucide="maximize" class="info-icon"></i> <div><small>Área</small><p>{{ inmueble.area }} m²</p></div></div>
-                    <div class="info-card"><i data-lucide="bed" class="info-icon"></i> <div><small>Habitaciones</small><p>{{ inmueble.habitaciones }}</p></div></div>
-                    <div class="info-card"><i data-lucide="bath" class="info-icon"></i> <div><small>Baños</small><p>{{ inmueble.banos }}</p></div></div>
-                    <div class="info-card"><i data-lucide="car" class="info-icon"></i> <div><small>Garajes</small><p>{{ inmueble.cantidad_garajes }}</p></div></div>
-                    <div class="info-card"><i data-lucide="shield-check" class="info-icon"></i> <div><small>Estado</small><p>{{ inmueble.estado }}</p></div></div>
+        <!-- Panel lateral -->
+        <div class="det-panel">
+            <div class="panel-card">
+
+                <div class="panel-header">
+                    <p>Precio de venta</p>
+                    <h3>${{ "{:,.0f}".format(inmueble.precio) }}</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="panel-asesor">
+                        <div class="asesor-avatar"><i data-lucide="user"></i></div>
+                        <div class="asesor-info">
+                            <small>Tu asesor</small>
+                            <p>Capital Group</p>
+                        </div>
+                    </div>
+
+                    <div class="panel-divider">¿Te interesa?</div>
+
+                    <div class="panel-preguntas">
+                        <div class="preg-card">
+                            <div class="preg-card-icon"><i data-lucide="home"></i></div>
+                            <div class="preg-card-text">
+                                <span class="preg-card-label">Hogar</span>
+                                <p class="preg-card-title">¿Es este tu próximo hogar?</p>
+                                <span class="preg-card-sub">Te acompañamos en cada paso del proceso de compra.</span>
+                            </div>
+                        </div>
+                        <div class="preg-card">
+                            <div class="preg-card-icon"><i data-lucide="trending-up"></i></div>
+                            <div class="preg-card-text">
+                                <span class="preg-card-label">Inversión</span>
+                                <p class="preg-card-title">¿Buscas una inversión segura?</p>
+                                <span class="preg-card-sub">Alto potencial de valorización en esta zona.</span>
+                            </div>
+                        </div>
+                        <div class="preg-card">
+                            <div class="preg-card-icon"><i data-lucide="clock"></i></div>
+                            <div class="preg-card-text">
+                                <span class="preg-card-label">Respuesta rápida</span>
+                                <p class="preg-card-title">¿Tienes dudas sobre el proceso?</p>
+                                <span class="preg-card-sub">Te respondemos en menos de 24 horas.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-divider">Contáctanos</div>
+
+                    <a href="{{ url_for('contacto', ref=inmueble.id) }}" class="btn-interes">
+                        Deseo más información
+                    </a>
+                    <a href="https://wa.me/573225903484?text=Hola,%20me%20interesa%20el%20inmueble:%20{{ inmueble.titulo }}"
+                       target="_blank" class="btn-wa">
+                        <i data-lucide="message-circle"></i> Contactar por WhatsApp
+                    </a>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=capitalgroup.cg01@gmail.com&su=Consulta:%20{{ inmueble.titulo }}"
+                       target="_blank" class="btn-email">
+                        <i data-lucide="mail"></i> Contactar por Correo
+                    </a>
+
                 </div>
             </div>
         </div>
 
-        <div class="accordion-item">
-            <button class="accordion-header">Otras Características <i data-lucide="chevron-down"></i></button>
-            <div class="accordion-content">
-                <div class="details-grid">
-                    <div class="info-card"><i data-lucide="paint-bucket" class="info-icon"></i> <div><small>Remodelado</small><p>{{ 'Sí' if inmueble.remodelado else 'No' }}</p></div></div>
-                    <div class="info-card"><i data-lucide="box" class="info-icon"></i> <div><small>Depósito</small><p>{{ 'Sí' if inmueble.deposito else 'No' }}</p></div></div>
-                    <div class="info-card"><i data-lucide="user-check" class="info-icon"></i> <div><small>Portería</small><p>{{ 'Sí' if inmueble.porteria else 'No' }}</p></div></div>
-                    <div class="info-card"><i data-lucide="flame" class="info-icon"></i> <div><small>Gas Natural</small><p>{{ 'Sí' if inmueble.gas else 'No' }}</p></div></div>
-                    <div class="info-card"><i data-lucide="parking-square" class="info-icon"></i> <div><small>Parqueadero</small><p>{{ 'Sí' if inmueble.parqueadero else 'No' }}</p></div></div>
-                    <div class="info-card"><i data-lucide="washing-machine" class="info-icon"></i> <div><small>Lavandería</small><p>{{ 'Sí' if inmueble.zona_lavanderia else 'No' }}</p></div></div>
-                </div>
-            </div>
-        </div>
     </div>
-
-    <div class="contacto-section">
-        <h3>¿Te interesa este inmueble?</h3>
-        <p>Elige tu medio de contacto preferido para recibir más información:</p>
-        
-        <div class="contacto-opciones">
-
-
-
-            <a href="https://wa.me/573225903484" target="_blank" class="opcion-contacto whatsapp">
-                <i data-lucide="message-circle"></i>
-                <span>Contactar por WhatsApp</span>
-            </a>
-            
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=capitalgroup.cg01@gmail.com" class="opcion-contacto email">
-                <i data-lucide="mail"></i>
-                <span>Contactar por Correo</span>
-            </a>
-        </div>
-    </div>
-
-    {% if inmueble.enlace_maps %}
-    <a href="{{ inmueble.enlace_maps }}" target="_blank" class="btn-maps">
-        <i data-lucide="map"></i> Ver Ubicación en Maps
-    </a>
-    {% endif %}
-
-    
 </div>
 
 <div class="simulador-container" id="simulador-credito" data-precio="{{ inmueble.precio }}">
@@ -129,10 +215,8 @@
     </p>
 </div>
 
-
 {% endblock %}
 
 {% block extra_js %}
-    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="{{ url_for('static', filename='js/detalle.js') }}"></script>
 {% endblock %}

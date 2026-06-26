@@ -5,29 +5,71 @@
 {% endblock %}
 
 {% block content %}
-<div class="contacto-container">
-    <div class="form-container">
-        <h2>Solicitud de Información</h2>
-        <p>¿Interesado en este inmueble? Déjanos tus datos.</p>
-        
-        <form action="/contacto" method="POST">
-            <input type="hidden" name="inmueble_id" value="{{ ref }}">
-            
-            <div class="form-row">
-                <input type="text" name="nombre" placeholder="Nombre completo" required>
-                <input type="tel" name="telefono" placeholder="Teléfono" required>
-            </div>
-            
-            <input type="email" name="email" placeholder="Correo electrónico (opcional)">
-            
-            <textarea id="mensajeArea" name="mensaje" rows="4" placeholder="Escribe aquí alguna pregunta específica que tengas"></textarea>
-            
-            <div class="button-group">
-                <button type="submit" class="btn-submit">Enviar Solicitud</button>
-                <button type="button" class="btn-quick" onclick="setMensaje()">Mensaje rápido</button>
-            </div>
-        </form>
+<div class="contacto-wrapper">
+  <div class="contacto-grid">
+
+    <!-- Panel izquierdo -->
+    <div class="contacto-panel-img">
+      <div class="contacto-logo-area">
+        <span class="contacto-tag">Capital Group</span>
+        <h2 class="contacto-hero-title">
+          Tu patrimonio<br>empieza con una<br><span>buena decisión.</span>
+        </h2>
+        <p class="contacto-hero-sub">
+          Conectamos personas con propiedades que trascienden.
+          Cada inmueble es una oportunidad de crecimiento real.
+        </p>
+      </div>
+
+      <ul class="contacto-features">
+        <li><div class="feat-icon">✦</div> Asesoría personalizada sin costo</li>
+        <li><div class="feat-icon">⏱</div> Respuesta en menos de 24 horas</li>
+        <li><div class="feat-icon">📍</div> Propiedades verificadas en Bogotá</li>
+        <li><div class="feat-icon">🏆</div> +5 años de experiencia inmobiliaria</li>
+      </ul>
+
+      <div class="contacto-quote">
+        <p>"Donde la inversión se convierte en patrimonio."</p>
+      </div>
     </div>
+
+    <!-- Panel formulario -->
+    <div class="contacto-panel-form">
+      <p class="contacto-eyebrow">Contáctanos</p>
+      <h3 class="contacto-form-title">Escríbenos para recibir<br>asesoría personalizada</h3>
+      <p class="contacto-form-sub">Sin compromisos. Un asesor te contactará para conocer tus necesidades.</p>
+
+      <form action="/contacto" method="POST">
+        <input type="hidden" name="inmueble_id" value="{{ ref }}">
+        
+        <div class="form-row-2">
+          <input type="text" name="nombre" placeholder="Nombre" required>
+          <input type="text" name="apellido" placeholder="Apellido" required>
+        </div>
+        
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="tel" name="telefono" placeholder="Teléfono / WhatsApp" required>
+        
+        <select name="tipo_solicitud">
+          <option value="" disabled selected>¿Qué estás buscando?</option>
+          <option value="Comprar">Comprar inmueble</option>
+          <option value="Arrendar">Arrendar inmueble</option>
+          <option value="Invertir">Invertir</option>
+          <option value="Publicar">Publicar mi propiedad</option>
+        </select>
+        
+        <textarea id="mensajeArea" name="mensaje" placeholder="Cuéntanos más sobre lo que buscas..."></textarea>
+        
+        <div class="button-group" style="display: flex; gap: 10px; margin-top: 10px;">
+            <button type="submit" class="btn-submit" style="flex: 2;">Quiero ser asesorado</button>
+            <button type="button" class="btn-quick" onclick="setMensaje()" style="flex: 1; cursor: pointer;">Mensaje rápido</button>
+        </div>
+      </form>
+      
+      <p class="contacto-privacy">Tu información es confidencial y nunca será compartida.</p>
+    </div>
+
+  </div>
 </div>
 
 <script>

@@ -1,3 +1,4 @@
+
 :root {
     --primary-blue: #0b1e42;   /* Azul profundo corporativo */
     --accent-gold: #c5a059;    /* Dorado insignia */
@@ -203,6 +204,66 @@ i[data-lucide] {
     border-radius: 8px;
     flex: 1; /* Esto es lo que los hace medir lo mismo */
 }
+
+/* --- Políticas --- */
+.politicas-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    color: var(--text-dark);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+}
+
+.politicas-container header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.politicas-container h1 {
+    color: var(--primary-blue);
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--accent-gold);
+    display: inline-block;
+    padding-bottom: 6px;
+}
+
+.politicas-container h3 {
+    color: var(--accent-gold);
+    font-size: 1.1rem;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.politicas-container p {
+    margin-bottom: 15px;
+}
+
+.politicas-container hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 35px 0;
+}
+
+.declaracion {
+    background: var(--bg-light);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--accent-gold);
+}
+
+.declaracion h3 {
+    color: var(--primary-blue);
+    margin-bottom: 12px;
+}
+
 
 /* El media query para celulares */
 @media (max-width: 600px) {
