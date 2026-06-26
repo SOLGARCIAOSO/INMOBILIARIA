@@ -85,16 +85,29 @@ def quienes_somos():
     return render_template('quienes_somos.html')
 
 
-@app.route('/catalogo')
+@app.route('/catalogo', methods=['GET'])
 def catalogo():
-    # 1. Recuperamos todo desde la tabla Inmueble
-    inmuebles = Inmueble.query.all()
+    # 1. Obtenemos el término de búsqueda de la URL
+    query = request.args.get('q', '').strip()
     
-    # 2. Imprimimos en consola para ver si realmente encontró algo
-    print(f"DEBUG: Se encontraron {len(inmuebles)} inmuebles en la base de datos.")
+    # 2. Lógica de filtrado
+    if query:
+        # Filtramos si hay una búsqueda
+        inmuebles = Inmueble.query.filter(
+            Inmueble.ciudad.ilike(f'%{query}%') | 
+            Inmueble.localidad.ilike(f'%{query}%')
+        ).all()
+        
+    else:
+        # Si no hay búsqueda, traemos todo
+        inmuebles = Inmueble.query.all()
     
-    # 3. Enviamos 'apartamentos' al template
-    return render_template('catalogo.html', apartamentos=inmuebles)
+    # 3. Debug opcional
+    print(f"DEBUG: Se encontraron {len(inmuebles)} inmuebles para la búsqueda: '{query}'")
+    
+    # 4. Enviamos los datos al template
+    # IMPORTANTE: Aquí enviamos 'apartamentos' para que coincida con tu HTML actual
+    return render_template('catalogo.html', apartamentos=inmuebles, query=query)
 
 
 @app.route('/politicas')
@@ -336,6 +349,7 @@ def logout():
     logout_user()
     flash('Has cerrado sesión.', 'info')
     return redirect(url_for('inicio'))
+
 
 
 if __name__ == '__main__':

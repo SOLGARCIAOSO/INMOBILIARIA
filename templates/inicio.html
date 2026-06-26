@@ -10,10 +10,10 @@
   <div class="hero-text">
     <h1>Capital Group</h1>
     <p>Donde la inversión se convierte en patrimonio.</p>
-    <form class="buscador">
-      <input type="text" placeholder="Busca por ciudad, barrio o inmueble...">
-      <button type="submit">Buscar</button>
-    </form>
+    <form class="buscador" action="{{ url_for('catalogo') }}" method="GET">
+        <input type="text" name="q" placeholder="Busca por ciudad, barrio o inmueble..." required>
+        <button type="submit">Buscar</button>
+      </form>
   </div>
 </div>
 
