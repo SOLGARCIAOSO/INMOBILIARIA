@@ -301,3 +301,19 @@
     .form-row-2 { grid-template-columns: 1fr; }
     .contacto-hero-title { font-size: 1.3rem; }
 }
+
+/* Estilo base para el botón secundario (Mensaje rápido) */
+.btn-quick {
+    background-color: #f4f4f4; /* Fondo gris claro */
+    border: 1px solid #c1c1c1; /* Borde fino gris */
+    color: #000;              /* Texto oscuro */
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-quick:hover {
+    background-color: #e8e8e8; /* Un poco más oscuro al pasar el mouse */
+    border-color: #999;
+}

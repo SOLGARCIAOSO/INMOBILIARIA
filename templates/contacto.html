@@ -47,7 +47,7 @@
           <input type="text" name="apellido" placeholder="Apellido" required>
         </div>
         
-        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="email" name="email" placeholder="Correo electrónico (opcional)">
         <input type="tel" name="telefono" placeholder="Teléfono / WhatsApp" required>
         
         <select name="tipo_solicitud">
@@ -60,9 +60,10 @@
         
         <textarea id="mensajeArea" name="mensaje" placeholder="Cuéntanos más sobre lo que buscas..."></textarea>
         
-        <div class="button-group" style="display: flex; gap: 10px; margin-top: 10px;">
+        <div class="button-group" style="display: flex; gap: 15px; margin-top: 15px;">
+    <!-- Asegúrate de que btn-submit tenga sus estilos en el CSS también -->
             <button type="submit" class="btn-submit" style="flex: 2;">Quiero ser asesorado</button>
-            <button type="button" class="btn-quick" onclick="setMensaje()" style="flex: 1; cursor: pointer;">Mensaje rápido</button>
+            <button type="button" class="btn-quick" onclick="setMensaje()">Mensaje rápido</button>
         </div>
       </form>
       

@@ -5,6 +5,29 @@
     --text-dark: #333;
 }
 
+/* --- Breadcrumb --- */
+.breadcrumb {
+    font-size: 1.2rem;   /* tamaño más grande y legible */
+    margin: 20px 0;
+    padding-left: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: #999; /* gris claro */
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: var(--accent-gold); /* dorado al pasar el mouse */
+}
+
+.breadcrumb span {
+    color: var(--accent-gold); /* dorado fijo para la sección actual */
+    font-weight: bold;
+}
+
 /* --- Contenedor principal --- */
 .quienes-somos-container {
     max-width: 1000px;

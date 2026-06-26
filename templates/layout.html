@@ -21,12 +21,11 @@
         </div>
     {% endif %}
 
-    <button class="menu-toggle" aria-label="Abrir menú">
-        <i data-lucide="menu"></i>
-    </button>
+    
 
     <div class="container">
         <nav class="sidebar" id="sidebar">
+            <span class="close-btn" id="close-menu">&times;</span>
             <h2>Capital Group</h2>
             <ul>
                 <li><a href="/">Inicio</a></li>
@@ -72,13 +71,31 @@
     </div>
 
     <footer>
-        <div class="footer-container" style="font-family: 'Poppins', sans-serif; text-align: center; padding: 20px;">
-            <h3>INFORMACIÓN CORPORATIVA</h3>
-            <p><strong>Capital Group Inmobiliaria & Inversiones</strong><br>
-            Subdivisión Estratégica de Claros Epoxy S.A.S. | NIT 901675586-9</p>
-            <p class="copyright" style="margin-top: 15px; font-size: 0.8em; color: #666;">Todos los derechos reservados &copy; 2026</p>
+    <div class="footer-container" style="font-family: 'Poppins', sans-serif; text-align: center; padding: 20px;">
+        <h3>INFORMACIÓN CORPORATIVA</h3>
+        <p><strong>Capital Group Inmobiliaria & Inversiones</strong><br>
+        Subdivisión Estratégica de Claros Epoxy S.A.S. | NIT 901675586-9</p>
+        
+        <div class="footer-links">
+            <span style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <i data-lucide="map-pin" style="width: 18px; height: 18px;"></i> Bogotá D.C. - Colombia
+            </span>
         </div>
-    </footer>
+        <div class="social-media" style="margin-top: 15px;">
+            <p>Síguenos en nuestras redes:</p>
+            <div class="social-links" style="display: flex; justify-content: center; gap: 20px;">
+                <a href="https://www.instagram.com/cg_capital.group" target="_blank" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit;">
+                    <i data-lucide="instagram" style="width: 18px; height: 18px;"></i> Instagram
+                </a>
+                <a href="https://www.tiktok.com/@cg_capital.group" target="_blank" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: inherit;">
+                    <i data-lucide="music" style="width: 18px; height: 18px;"></i> TikTok
+                </a>
+                </div>
+                </div>
+                <p class="copyright" style="margin-top: 15px; font-size: 0.8em; color: #666;">Todos los derechos reservados &copy; 2026</p>
+    </div>
+</footer>
+
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -86,5 +103,10 @@
     </script>
     
     {% block extra_js %} <script src="{{ url_for('static', filename='js/main.js') }}"></script> {% endblock %}
+
+<button class="menu-toggle" aria-label="Abrir menú">
+        <i data-lucide="menu"></i>
+    </button>
+
 </body>
 </html>

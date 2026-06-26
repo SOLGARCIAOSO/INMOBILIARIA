@@ -2,10 +2,16 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/quienes_somos.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/breadcrumb.css') }}">
 {% endblock %}
 
 {% block content %}
 <div class="quienes-somos-container">
+
+    <!-- Breadcrumb superior izquierda -->
+    <nav class="breadcrumb">
+        <a href="{{ url_for('inicio') }}">Inicio</a> › <span>Quiénes Somos</span>
+    </nav>
     
     <header class="qs-header">
         <h1>CAPITAL GROUP INMOBILIARIA & INVERSIONES</h1>

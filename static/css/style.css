@@ -1,4 +1,3 @@
-
 :root {
     --primary-blue: #0b1e42;   /* Azul profundo corporativo */
     --accent-gold: #c5a059;    /* Dorado insignia */
@@ -14,54 +13,22 @@ body {
     background-color: var(--bg-light); 
     color: var(--text-dark);
 }
-.container { display: flex; width: 100%; }
-
-/* --- Sidebar --- */
-.sidebar {
-    width: 250px;
-    background-color: var(--primary-blue);
-    color: white;
-    padding: 20px;
-    transition: transform 0.3s ease;
-}
-.sidebar ul { list-style: none; padding: 0; margin-top: 20px; }
-.sidebar a { 
-    color: white; 
-    text-decoration: none; 
-    display: block; 
-    padding: 12px 15px; 
-    transition: all 0.3s ease;
-    border-left: 4px solid transparent; 
-}
-.sidebar a:hover { 
-    background: var(--hover-bg); 
-    border-left: 4px solid var(--accent-gold); 
-    padding-left: 20px; 
+.container {
+    display: flex;
+    position: relative; /* CRÍTICO: permite que el sidebar se posicione relativo a esto */
+    min-height: 100vh;
 }
 
-/* --- Contenido y Menú Móvil --- */
+
 /* --- Contenido --- */
 .content {
     flex: 1; 
     width: 100%;
     min-width: 0;
-    padding: 20px; /* AÑADE ESTO: Esto crea el espacio entre el borde del menu y el contenido */
-    box-sizing: border-box; /* IMPORTANTE: Asegura que el padding no sume ancho extra */
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-.menu-toggle {
-    display: none;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1100;
-    background: var(--primary-blue);
-    color: white;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-    border-radius: 4px;
-}
 
 /* --- Footer --- */
 footer {
@@ -71,8 +38,6 @@ footer {
     border-top: 3px solid var(--primary-blue);
     margin-top: 40px;
 }
-
-/* Contenedor principal de los enlaces */
 .footer-links {
     display: flex;
     flex-direction: column;
@@ -80,8 +45,6 @@ footer {
     gap: 15px;
     margin-top: 15px;
 }
-
-/* Estilo para los elementos con iconos */
 .footer-links span, .social-links a {
     display: flex;
     align-items: center;
@@ -91,72 +54,43 @@ footer {
     font-size: 0.95rem;
     font-weight: 500;
 }
-
-/* Ajuste específico para redes sociales */
 .social-links {
     display: flex;
     justify-content: center;
     gap: 20px;
     margin-top: 10px;
 }
+.social-links a:hover { color: var(--accent-gold); }
+i[data-lucide] { width: 18px; height: 18px; }
 
-/* Efecto hover */
-.social-links a:hover {
-    color: var(--accent-gold);
-}
-
-/* Asegurar tamaño de iconos */
-i[data-lucide] {
-    width: 18px;
-    height: 18px;
-}
-
-/* --- Modal de Cookies (Cookie Wall) --- */
-/* Usamos el ID para asegurar máxima prioridad sobre cualquier otra regla */
+/* --- Modal Cookies --- */
 #cookie-consent {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     background: rgba(11, 30, 66, 0.85);
     z-index: 999999;
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(5px);
 }
-
-#cookie-consent.show {
-    display: flex !important;
-}
-
+#cookie-consent.show { display: flex !important; }
 .cookie-content {
     background: #ffffff;
     padding: 30px;
     border-radius: 20px;
-    border: 2px solid var(--accent-gold); /* Dorado insignia */
+    border: 2px solid var(--accent-gold);
     max-width: 450px;
     width: 90%;
     text-align: center;
     box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    font-family: 'Poppins', sans-serif;
 }
-
-.cookie-content h2 { 
-    color: var(--primary-blue); 
-    margin-top: 0; 
-}
-
-.cookie-content p { 
-    color: var(--text-dark); 
-    margin-bottom: 25px; 
-    line-height: 1.5;
-}
-
+.cookie-content h2 { color: var(--primary-blue); margin-top: 0; }
+.cookie-content p { color: var(--text-dark); margin-bottom: 25px; line-height: 1.5; }
 .btn-primary { 
     background: var(--primary-blue); 
-    color: #ffffff; 
+    color: #fff; 
     padding: 12px 25px; 
     border-radius: 25px; 
     border: none; 
@@ -165,11 +99,7 @@ i[data-lucide] {
     margin-right: 15px;
     transition: background 0.3s;
 }
-
-.btn-primary:hover { 
-    background: var(--hover-bg); 
-}
-
+.btn-primary:hover { background: var(--hover-bg); }
 .cookie-content a { 
     color: var(--primary-blue); 
     text-decoration: underline; 
@@ -177,32 +107,24 @@ i[data-lucide] {
     font-size: 0.95rem;
 }
 
-
-/* --- Responsive --- */
-@media (max-width: 768px) {
-    .menu-toggle { display: block; }
-    .sidebar { position: fixed; left: -250px; top: 0; height: 100vh; z-index: 1000; }
-    .sidebar.active { left: 0; }
-}
-
+/* --- Contacto --- */
 .contacto-opciones {
     display: flex;
     gap: 15px;
     margin-top: 20px;
     width: 100%;
 }
-
 .opcion-contacto {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     padding: 15px;
-    background: #0b1e42;
+    background: var(--primary-blue);
     color: white;
     text-decoration: none;
     border-radius: 8px;
-    flex: 1; /* Esto es lo que los hace medir lo mismo */
+    flex: 1;
 }
 
 /* --- Políticas --- */
@@ -218,12 +140,7 @@ i[data-lucide] {
     font-size: 0.95rem;
     box-shadow: 0 12px 28px rgba(0,0,0,0.08);
 }
-
-.politicas-container header {
-    text-align: center;
-    margin-bottom: 35px;
-}
-
+.politicas-container header { text-align: center; margin-bottom: 35px; }
 .politicas-container h1 {
     color: var(--primary-blue);
     font-size: 1.8rem;
@@ -233,7 +150,6 @@ i[data-lucide] {
     display: inline-block;
     padding-bottom: 6px;
 }
-
 .politicas-container h3 {
     color: var(--accent-gold);
     font-size: 1.1rem;
@@ -241,40 +157,105 @@ i[data-lucide] {
     margin-bottom: 10px;
     font-weight: 700;
 }
-
-.politicas-container p {
-    margin-bottom: 15px;
-}
-
+.politicas-container p { margin-bottom: 15px; }
 .politicas-container hr {
     border: none;
     border-top: 1px solid #ddd;
     margin: 35px 0;
 }
-
 .declaracion {
     background: var(--bg-light);
     padding: 20px;
     border-radius: 8px;
     border: 1px solid var(--accent-gold);
 }
+.declaracion h3 { color: var(--primary-blue); margin-bottom: 12px; }
 
-.declaracion h3 {
-    color: var(--primary-blue);
-    margin-bottom: 12px;
+
+
+/* --- 1. Botón Hamburguesa --- */
+.menu-toggle {
+    display: block; 
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    /* Usamos un valor de z-index muy alto */
+    z-index: 9999 !important; 
+    background: var(--primary-blue);
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    /* Asegura que el botón siempre capture los clics */
+    pointer-events: auto !important; 
 }
 
-
-/* El media query para celulares */
-@media (max-width: 600px) {
-    .contacto-opciones {
-        flex-direction: column;
-    }
+/* --- 2. Sidebar --- */
+.sidebar {
+    width: 250px;
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 2000;
 }
 
-@media (max-width: 768px) {
-    .content {
-        padding: 15px; /* Un poco menos de espacio en móvil */
-        margin-top: 50px; /* Asegura que el contenido no quede oculto detrás del botón toggle */
+.sidebar.active {
+    transform: translateX(0);
+}
+
+/* --- 3. Botón de Cierre (La "X") --- */
+.close-btn {
+    font-size: 30px;
+    cursor: pointer;
+    text-align: right;
+    display: block;
+    margin-bottom: 20px;
+    color: white;
+}
+
+/* --- 4. Estilos internos (Listas y enlaces) --- */
+.sidebar ul { list-style: none; padding: 0; margin-top: 20px; }
+.sidebar a { 
+    color: white; 
+    text-decoration: none; 
+    display: block; 
+    padding: 12px 15px; 
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent; 
+}
+.sidebar a:hover { 
+    background: var(--hover-bg); 
+    border-left: 4px solid var(--accent-gold); 
+    padding-left: 20px; 
+}
+
+/* --- 5. Overlay --- */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1500;
+}
+.sidebar-overlay.active { display: block; }
+
+/* --- 6. Ajuste Escritorio --- */
+@media (min-width: 768px) {
+    .menu-toggle, .close-btn { display: none; }
+    .sidebar { 
+        transform: translateX(0); 
+        position: static; 
+        height: auto; 
     }
 }

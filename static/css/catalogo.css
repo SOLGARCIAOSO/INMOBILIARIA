@@ -1,10 +1,16 @@
-
 /* =============================================
-   CAPITAL GROUP — catalogo.css
+   CAPITAL GROUP — catalogo.css — Premium v2
    ============================================= */
 
+:root {
+    --primary-blue: #0b1e42;
+    --accent-gold: #c5a059;
+    --bg-light: #f8f9fa;
+    --text-dark: #333;
+}
+
 .catalogo-container {
-    padding: 30px 20px;
+    padding: 40px 20px;
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
@@ -14,7 +20,7 @@
     color: var(--primary-blue);
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 30px;
+    margin-bottom: 36px;
     border-bottom: 3px solid var(--accent-gold);
     padding-bottom: 10px;
 }
@@ -25,9 +31,10 @@
     grid-column: 1 / -1;
 }
 
+/* --- Breadcrumb --- */
 .det-breadcrumb {
-    font-size: 0.78rem;
-    color: #aaa;                  /* gris por defecto */
+    font-size: 1rem;
+    color: #aaa;
     margin-bottom: 18px;
     display: flex;
     gap: 6px;
@@ -35,49 +42,50 @@
 }
 
 .det-breadcrumb a {
-    color: #aaa;                  /* enlaces en gris */
+    color: #aaa;
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .det-breadcrumb a:hover {
-    color: var(--accent-gold);    /* dorado al pasar el mouse */
+    color: var(--accent-gold);
 }
 
 .det-breadcrumb span {
-    color: var(--accent-gold);    /* dorado fijo para la página activa */
+    color: var(--accent-gold);
     font-weight: 600;
 }
-
 
 /* --- Grid --- */
 .grid-inmuebles {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 28px;
 }
 
 /* --- Card --- */
 .card {
-    background: #0f1624;
-    border-radius: 16px;
+    background: var(--primary-blue);
+    border-radius: 20px;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(197,160,89,0.15);
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 24px 48px rgba(0,0,0,0.35);
-    border-color: rgba(197,160,89,0.4);
+    transform: translateY(-10px);
+    box-shadow: 0 32px 64px rgba(0,0,0,0.45), 0 0 0 1px rgba(197,160,89,0.3);
+    border-color: rgba(197,160,89,0.45);
 }
 
 /* --- Imagen --- */
 .card-image {
     position: relative;
     width: 100%;
-    height: 200px;
+    height: 210px;
     overflow: hidden;
     flex-shrink: 0;
     background: #1e2840;
@@ -87,157 +95,259 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s ease;
     display: block;
 }
 
 .card:hover .img-inmueble {
-    transform: scale(1.04);
+    transform: scale(1.06);
+}
+
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 40%,
+        rgba(10,15,30,0.75) 100%
+    );
+    pointer-events: none;
 }
 
 .no-image {
     width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: center;
     color: rgba(255,255,255,0.15);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
 }
 
-.no-image i { width: 48px; height: 48px; }
-
-/* Badge — sobre la imagen, esquina inferior izquierda */
-.badge-wrap {
+/* --- Estado + Ficha Técnica --- */
+.card-status {
     position: absolute;
-    bottom: 10px; left: 10px;
+    top: 14px;
+    left: 14px;
+    right: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
 }
 
 .badge {
-    display: inline-block;
-    background: var(--primary-blue);
-    color: #e8d5b0;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 1.2px;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    padding: 5px 13px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.badge-disponible {
+    background-color: #1a3c6e;
+    border: 1px solid rgba(197,160,89,0.3);
+    color: #ffffff;
+}
+
+.badge-reservado {
+    background-color: #c0392b;
+    border: 1px solid rgba(255,100,80,0.3);
+    color: #ffffff;
+}
+
+.badge-vendido {
+    background-color: #555555;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #ffffff;
+}
+
+/* Botón Ficha Técnica */
+.btn-ficha {
+    font-size: 0.85rem;
+    color: var(--accent-gold);
+    text-decoration: none;
+    border: 1px solid rgba(197,160,89,0.4);
+    padding: 5px 10px;
     border-radius: 6px;
-    border: 1px solid rgba(197,160,89,0.35);
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.05);
 }
 
-/* Botón compartir */
-.btn-share {
-    position: absolute;
-    top: 10px; right: 10px;
-    width: 34px; height: 34px;
-    background: rgba(255, 255, 255, 0.295);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.747);
-    cursor: pointer;
-    transition: background 0.2s;
+.btn-ficha:hover {
+    background: var(--accent-gold);
+    color: #0d1420;
+    border-color: var(--accent-gold);
+    box-shadow: 0 6px 24px rgba(197,160,89,0.35);
 }
-.btn-share:hover { background: rgba(255,255,255,0.25); }
-.btn-share i { width: 16px; height: 16px; color: #fff; }
-
 /* --- Cuerpo --- */
 .card-body {
-    padding: 16px 18px 15px;
+    padding: 18px 22px 20px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0;
 }
 
-/* Ubicación */
+.card-header-info {
+    margin-bottom: 12px;
+}
+
 .ciudad {
-    font-size: 0.78rem;
+    font-size: 0.7rem;
     font-weight: 700;
     color: var(--accent-gold);
-    display: flex;
-    align-items: center;
-    gap: 5px;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin: 0;
-}
-.ciudad i { width: 13px; height: 13px; flex-shrink: 0; }
-
-/* Precio */
-.precio {
-    font-size: 1.45rem;
-    font-weight: 800;
-    color: var(--accent-gold);
-    letter-spacing: -0.5px;
-    margin: 0;
-    display: block;
+    letter-spacing: 1.5px;
+    margin: 0 0 4px 0;
+    opacity: 0.85;
 }
 
-/* Título */
 .card-body h3 {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.45;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgba(241, 182, 70, 0.815);
+    line-height: 1.4;
     margin: 0;
     text-transform: capitalize;
 }
 
-/* Separador */
-.card-sep {
-    height: 1px;
-    background: rgba(255,255,255,0.07);
-    margin: 2px 0;
+/* Precio */
+.precio-wrap {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(197,160,89,0.15);
 }
 
-/* Detalles — grid 2×2, nunca se cortan */
+.precio-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.61);
+    margin-bottom: 2px;
+}
+
+.precio {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    margin: 0;
+    line-height: 1;
+}
+
+/* Detalles */
 .card-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 7px 10px;
-    font-size: 0.88rem;
-    color: rgba(255,255,255,0.6);
-}
-
-.card-details span {
     display: flex;
     align-items: center;
-    gap: 6px;
-    white-space: nowrap;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.card-details i {
-    width: 15px; height: 15px;
-    color: rgba(197,160,89,0.75);
-    flex-shrink: 0;
+.det-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
 }
 
-/* Botón ver detalles */
+.det-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.det-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.685);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.det-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(197,160,89,0.2);
+}
+
+/* Botón Ver Propiedad */
 .btn-contacto {
-    display: block;
-    text-align: center;
-    background: var(--primary-blue);
-    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--accent-gold);
     text-decoration: none;
     padding: 13px;
     border-radius: 10px;
-    font-size: 0.92rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    border: 1px solid rgba(197,160,89,0.2);
-    margin-top: 2px;
-    transition: background 0.25s, color 0.25s, border-color 0.25s;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid rgba(197,160,89,0.4);
+    margin-top: auto;
+    transition: background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.25s;
 }
+
 .btn-contacto:hover {
     background: var(--accent-gold);
-    color: var(--primary-blue);
+    color: #0d1420;
     border-color: var(--accent-gold);
+    box-shadow: 0 6px 24px rgba(197,160,89,0.35);
 }
+
+.btn-arrow {
+    transition: transform 0.2s ease;
+}
+
+.btn-contacto:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* compartir */
+.btn-share {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-gold);
+    background: rgba(255,255,255,0.08);
+    color: var(--accent-gold);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-share:hover {
+    background: var(--accent-gold);
+    color: #0d1420;
+    box-shadow: 0 6px 24px rgba(197,160,89,0.35);
+    transform: scale(1.1);
+}
+
+.btn-share svg {
+    width: 18px;
+    height: 18px;
+}
+
 
 /* Botones admin */
 .admin-actions {
     display: flex;
     gap: 8px;
     border-top: 1px solid rgba(255,255,255,0.07);
-    padding-top: 11px;
-    margin-top: 2px;
+    padding-top: 12px;
+    margin-top: 12px;
 }
 
 .admin-btn {
@@ -246,11 +356,11 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    color: rgba(255,255,255,0.6);
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: 8px;
     padding: 9px;
     cursor: pointer;
@@ -258,8 +368,16 @@
     text-decoration: none;
     transition: background 0.2s, color 0.2s;
 }
-.admin-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
-.admin-btn i { width: 15px; height: 15px; }
+
+.admin-btn:hover { 
+    background: rgba(255,255,255,0.1); 
+    color: #fff; 
+}
+
+.admin-btn i { 
+    width: 14px; 
+    height: 14px; 
+}
 
 /* --- Responsive --- */
 @media (max-width: 1024px) {
@@ -268,6 +386,6 @@
 
 @media (max-width: 600px) {
     .catalogo-container { width: 100%; padding: 15px; }
-    .grid-inmuebles { grid-template-columns: 1fr; gap: 16px; }
+    .grid-inmuebles { grid-template-columns: 1fr; gap: 18px; }
     .catalogo-container h1 { font-size: 1.5rem; }
 }

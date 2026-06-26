@@ -8,45 +8,52 @@ document.addEventListener('DOMContentLoaded', () => {
         lucide.createIcons();
     }
 
-    // =========================================
+   // =========================================
     // 2. Menú móvil — con overlay y gestos
     // =========================================
     const menuToggle = document.querySelector('.menu-toggle');
     const sidebar    = document.querySelector('.sidebar');
+    const closeBtn   = document.getElementById('close-menu'); // Referencia al nuevo botón X
 
-    // Crear overlay dinámicamente (evita duplicarlo en cada template)
+    // Crear overlay dinámicamente
     const overlay = document.createElement('div');
     overlay.className = 'sidebar-overlay';
     document.body.appendChild(overlay);
 
-    function abrirSidebar() {
-        sidebar.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // evita scroll de fondo
-        menuToggle.setAttribute('aria-expanded', 'true');
-    }
-
-    function cerrarSidebar() {
-        sidebar.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-        menuToggle.setAttribute('aria-expanded', 'false');
+    function toggleMenu(abrir) {
+        if (abrir) {
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // evita scroll de fondo
+            menuToggle.setAttribute('aria-expanded', 'true');
+            // Ocultar hamburguesa al abrir
+            menuToggle.style.opacity = '0';
+            menuToggle.style.pointerEvents = 'none';
+        } else {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            menuToggle.setAttribute('aria-expanded', 'false');
+            // Mostrar hamburguesa al cerrar
+            menuToggle.style.opacity = '1';
+            menuToggle.style.pointerEvents = 'auto';
+        }
     }
 
     if (menuToggle && sidebar) {
         menuToggle.setAttribute('aria-expanded', 'false');
 
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.contains('active') ? cerrarSidebar() : abrirSidebar();
-        });
+        // Evento abrir
+        menuToggle.addEventListener('click', () => toggleMenu(true));
 
-        // Cerrar al hacer clic en el overlay
-        overlay.addEventListener('click', cerrarSidebar);
+        // Evento cerrar (X y Overlay)
+        if (closeBtn) closeBtn.addEventListener('click', () => toggleMenu(false));
+        overlay.addEventListener('click', () => toggleMenu(false));
 
         // Cerrar con tecla Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-                cerrarSidebar();
+                toggleMenu(false);
                 menuToggle.focus();
             }
         });
@@ -54,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Cerrar al redimensionar a pantalla grande
         window.addEventListener('resize', () => {
             if (window.innerWidth > 768) {
-                cerrarSidebar();
+                toggleMenu(false);
             }
         });
 
@@ -71,17 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const deltaX = e.changedTouches[0].clientX - touchStartX;
             const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY);
 
-            // Sólo si el movimiento horizontal supera el vertical (no es scroll)
             if (deltaY > 60) return;
 
             // Swipe derecha desde el borde izquierdo → abrir
             if (deltaX > 60 && touchStartX < 40 && !sidebar.classList.contains('active')) {
-                abrirSidebar();
+                toggleMenu(true);
             }
 
             // Swipe izquierda → cerrar
             if (deltaX < -60 && sidebar.classList.contains('active')) {
-                cerrarSidebar();
+                toggleMenu(false);
             }
         }, { passive: true });
     }
