@@ -75,16 +75,17 @@ with app.app_context():
 
 # --- RUTAS ---
 
+# inicio
 @app.route('/')
 def inicio():
     return render_template('inicio.html')
 
-
+# quienes somos
 @app.route('/quienes-somos')
 def quienes_somos():
     return render_template('quienes_somos.html')
 
-
+# catalogo
 @app.route('/catalogo', methods=['GET'])
 def catalogo():
     # 1. Obtenemos el término de búsqueda de la URL
@@ -97,7 +98,7 @@ def catalogo():
             Inmueble.ciudad.ilike(f'%{query}%') | 
             Inmueble.localidad.ilike(f'%{query}%')
         ).all()
-        
+
     else:
         # Si no hay búsqueda, traemos todo
         inmuebles = Inmueble.query.all()
@@ -110,11 +111,13 @@ def catalogo():
     return render_template('catalogo.html', apartamentos=inmuebles, query=query)
 
 
+# politicas
 @app.route('/politicas')
 def politicas():
     return render_template('politicas.html')
 
 
+# inmueble
 @app.route('/inmueble/<int:id>')
 def detalle_inmueble(id):
     inmueble = Inmueble.query.get_or_404(id) # Asegúrate de usar Inmueble
@@ -130,6 +133,8 @@ def registrar_inmueble():
 # Esta ruta procesa los datos (POST)
 import time # Añade esta importación arriba en tu app.py
 
+
+# formulario de registro inmueble
 @app.route('/admin/guardar', methods=['POST'])
 def guardar_inmueble():
     # 1. Crear el objeto Inmueble
@@ -179,6 +184,7 @@ def guardar_inmueble():
     return redirect(url_for('catalogo'))
 
 
+# formulario de contacto
 @app.route('/contacto', methods=['GET', 'POST'])
 def contacto():
     if request.method == 'POST':
@@ -241,6 +247,7 @@ def contacto():
     return render_template('contacto.html', ref=ref)
 
 
+# formulario de edicion
 @app.route('/editar/<int:id>', methods=['GET', 'POST'])
 @login_required # Solo usuarios logueados
 def editar_inmueble(id):
@@ -278,6 +285,8 @@ def editar_inmueble(id):
 
     return render_template('inmueble_form.html', inmueble=inmueble)
 
+
+# funcionalidad de eliminación
 @app.route('/eliminar/<int:id>')
 @login_required # Solo usuarios logueados
 def eliminar_inmueble(id):

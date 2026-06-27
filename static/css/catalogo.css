@@ -146,7 +146,7 @@
 }
 
 .badge-disponible {
-    background-color: #1a3c6e;
+    background-color: var(--primary-blue);
     border: 1px solid rgba(197,160,89,0.3);
     color: #ffffff;
 }
@@ -322,7 +322,7 @@
     height: 38px;
     border-radius: 50%;
     border: 2px solid var(--accent-gold);
-    background: rgba(255,255,255,0.08);
+    background: var(--primary-blue);;
     color: var(--accent-gold);
     transition: all 0.3s ease;
     cursor: pointer;

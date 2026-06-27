@@ -6,76 +6,148 @@
 
 {% block content %}
 <div class="form-container">
-    <h2>{{ "Editar Inmueble" if inmueble else "Registrar Nuevo Inmueble" }}</h2>
-    
-    <form action="{{ url_for('editar_inmueble', id=inmueble.id) if inmueble else url_for('guardar_inmueble') }}" 
-          method="POST" 
-          enctype="multipart/form-data">
-        
-        <input type="text" name="titulo" placeholder="Título del inmueble" value="{{ inmueble.titulo if inmueble else '' }}" required>
-        <textarea name="descripcion" placeholder="Descripción detallada" rows="3" required>{{ inmueble.descripcion if inmueble else '' }}</textarea>
-        
-        <div class="form-row">
-            <input type="number" name="precio" placeholder="Precio (COP)" step="0.01" value="{{ inmueble.precio if inmueble else '' }}" required>
-            <input type="text" name="tipo_inmueble" placeholder="Tipo (ej: Apartamento, Casa)" value="{{ inmueble.tipo_inmueble if inmueble else '' }}" required>
-        </div>
 
-        <div class="form-row">
-            <input type="text" name="ciudad" placeholder="Ciudad" value="{{ inmueble.ciudad if inmueble else '' }}" required>
-            <input type="text" name="localidad" placeholder="Localidad / Barrio" value="{{ inmueble.localidad if inmueble else '' }}">
-            <input type="text" name="direccion" placeholder="Dirección exacta" value="{{ inmueble.direccion if inmueble else '' }}" required>
-        </div>
+    <!-- Header -->
+    <div class="form-header">
+        <span class="form-header-tag">Capital Group</span>
+        <h2>{{ "Editar Inmueble" if inmueble else "Registrar Nuevo Inmueble" }}</h2>
+    </div>
 
-        <div class="form-row">
-            <input type="number" name="antiguedad" placeholder="Antigüedad (años)" value="{{ inmueble.antiguedad if inmueble else '' }}">
-            <input type="number" name="estrato" placeholder="Estrato" value="{{ inmueble.estrato if inmueble else '' }}">
-            <input type="number" name="area" placeholder="Área (m2)" step="0.01" value="{{ inmueble.area if inmueble else '' }}">
-        </div>
-        
-        <div class="form-row">
-            <input type="number" name="habitaciones" placeholder="Habitaciones" value="{{ inmueble.habitaciones if inmueble else '' }}" required>
-            <input type="number" name="banos" placeholder="Baños" value="{{ inmueble.banos if inmueble else '' }}" required>
-            <input type="number" name="cantidad_garajes" placeholder="Garajes" value="{{ inmueble.cantidad_garajes if inmueble else '' }}" required>
-        </div>
+    <!-- Body -->
+    <div class="form-body">
+        <form action="{{ url_for('editar_inmueble', id=inmueble.id) if inmueble else url_for('guardar_inmueble') }}"
+              method="POST"
+              enctype="multipart/form-data">
 
-        <div class="form-row" style="justify-content: flex-start; gap: 20px; padding: 10px;">
-            <label><input type="checkbox" name="remodelado" {{ 'checked' if inmueble and inmueble.remodelado }}> Remodelado</label>
-            <label><input type="checkbox" name="deposito" {{ 'checked' if inmueble and inmueble.deposito }}> Depósito</label>
-            <label><input type="checkbox" name="porteria" {{ 'checked' if inmueble and inmueble.porteria }}> Portería</label>
-            <label><input type="checkbox" name="gas" {{ 'checked' if inmueble and inmueble.gas }}> Gas Natural</label>
-        </div>
-
-        <select name="estado">
-            <option value="Disponible" {{ 'selected' if inmueble and inmueble.estado == 'Disponible' }}>Disponible</option>
-            <option value="Reservado" {{ 'selected' if inmueble and inmueble.estado == 'Reservado' }}>Reservado</option>
-            <option value="Vendido" {{ 'selected' if inmueble and inmueble.estado == 'Vendido' }}>Vendido</option>
-        </select>
-
-        <label style="margin-top: 15px; display: block;">Imágenes (8 espacios):</label>
-            <div class="galeria-edicion" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
-                {% for i in range(8) %}
-                    <div class="img-slot" id="slot-{{ i }}" style="border: 1px dashed #ccc; padding: 10px; text-align: center; border-radius: 8px;">
-                        {% if inmueble and i < inmueble.imagenes|length %}
-                            <div id="wrapper-{{ inmueble.imagenes[i].id }}">
-                                <img src="{{ url_for('static', filename='uploads/' + inmueble.imagenes[i].ruta) }}" style="width: 80px; height: 80px; object-fit: cover; display: block; margin: 0 auto;">
-                                <button type="button" 
-                                        class="btn-borrar" 
-                                        data-id="{{ inmueble.imagenes[i].id }}" 
-                                        data-index="{{ i }}">
-                                    Eliminar
-                                </button>
-                            </div>
-                        {% else %}
-                            <input type="file" name="imagen_{{ i }}" accept="image/*" style="width: 100%; font-size: 12px;">
-                        {% endif %}
+            <!-- Información general -->
+            <div class="form-section">
+                <p class="form-section-title">Información general</p>
+                <div style="display:flex; flex-direction:column; gap:14px;">
+                    <input type="text" name="titulo" placeholder="Título del inmueble"
+                           value="{{ inmueble.titulo if inmueble else '' }}" required>
+                    <textarea name="descripcion" placeholder="Descripción detallada" rows="3"
+                              required>{{ inmueble.descripcion if inmueble else '' }}</textarea>
+                    <div class="form-row">
+                        <input type="number" name="precio" placeholder="Precio (COP)" step="0.01"
+                               value="{{ inmueble.precio if inmueble else '' }}" required>
+                        <input type="text" name="tipo_inmueble" placeholder="Tipo (ej: Apartamento, Casa)"
+                               value="{{ inmueble.tipo_inmueble if inmueble else '' }}" required>
                     </div>
-                {% endfor %}
+                </div>
             </div>
 
-            <input type="hidden" name="imagenes_a_borrar" id="imagenes_a_borrar">
+            <!-- Ubicación -->
+            <div class="form-section">
+                <p class="form-section-title">Ubicación</p>
+                <div style="display:flex; flex-direction:column; gap:14px;">
+                    <div class="form-row">
+                        <input type="text" name="ciudad" placeholder="Ciudad"
+                               value="{{ inmueble.ciudad if inmueble else '' }}" required>
+                        <input type="text" name="localidad" placeholder="Localidad / Barrio"
+                               value="{{ inmueble.localidad if inmueble else '' }}">
+                    </div>
+                    <input type="text" name="direccion" placeholder="Dirección exacta"
+                           value="{{ inmueble.direccion if inmueble else '' }}" required>
+                    <input type="text" name="enlace_maps" placeholder="Enlace Google Maps (opcional)"
+                           value="{{ inmueble.enlace_maps if inmueble else '' }}">
+                </div>
+            </div>
 
-        <button type="submit" class="btn-submit">Guardar {{ "Cambios" if inmueble else "Inmueble" }}</button>
-    </form>
+            <!-- Detalles -->
+            <div class="form-section">
+                <p class="form-section-title">Detalles del inmueble</p>
+                <div style="display:flex; flex-direction:column; gap:14px;">
+                    <div class="form-row-3">
+                        <input type="number" name="antiguedad" placeholder="Antigüedad (años)"
+                               value="{{ inmueble.antiguedad if inmueble else '' }}">
+                        <input type="number" name="estrato" placeholder="Estrato"
+                               value="{{ inmueble.estrato if inmueble else '' }}">
+                        <input type="number" name="area" placeholder="Área (m²)" step="0.01"
+                               value="{{ inmueble.area if inmueble else '' }}">
+                    </div>
+                    <div class="form-row-3">
+                        <input type="number" name="habitaciones" placeholder="Habitaciones"
+                               value="{{ inmueble.habitaciones if inmueble else '' }}" required>
+                        <input type="number" name="banos" placeholder="Baños"
+                               value="{{ inmueble.banos if inmueble else '' }}" required>
+                        <input type="number" name="cantidad_garajes" placeholder="Garajes"
+                               value="{{ inmueble.cantidad_garajes if inmueble else '' }}" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Características -->
+            <div class="form-section">
+                <p class="form-section-title">Características adicionales</p>
+                <div class="checkbox-grid">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="remodelado" {{ 'checked' if inmueble and inmueble.remodelado }}>
+                        Remodelado
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="deposito" {{ 'checked' if inmueble and inmueble.deposito }}>
+                        Depósito
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="porteria" {{ 'checked' if inmueble and inmueble.porteria }}>
+                        Portería
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="gas" {{ 'checked' if inmueble and inmueble.gas }}>
+                        Gas Natural
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="parqueadero" {{ 'checked' if inmueble and inmueble.parqueadero }}>
+                        Parqueadero
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="zona_lavanderia" {{ 'checked' if inmueble and inmueble.zona_lavanderia }}>
+                        Zona lavandería
+                    </label>
+                </div>
+            </div>
+
+            <!-- Estado -->
+            <div class="form-section">
+                <p class="form-section-title">Estado del inmueble</p>
+                <select name="estado">
+                    <option value="Disponible" {{ 'selected' if inmueble and inmueble.estado == 'Disponible' }}>Disponible</option>
+                    <option value="Reservado" {{ 'selected' if inmueble and inmueble.estado == 'Reservado' }}>Reservado</option>
+                    <option value="Vendido" {{ 'selected' if inmueble and inmueble.estado == 'Vendido' }}>Vendido</option>
+                </select>
+            </div>
+
+            <!-- Imágenes -->
+            <div class="form-section">
+                <p class="form-section-title">Imágenes del inmueble</p>
+                <div class="galeria-edicion">
+                    {% for i in range(8) %}
+                        <div class="img-slot" id="slot-{{ i }}">
+                            {% if inmueble and i < inmueble.imagenes|length %}
+                                <div id="wrapper-{{ inmueble.imagenes[i].id }}">
+                                    <img src="{{ url_for('static', filename='uploads/' + inmueble.imagenes[i].ruta) }}">
+                                    <button type="button"
+                                            class="btn-borrar"
+                                            data-id="{{ inmueble.imagenes[i].id }}"
+                                            data-index="{{ i }}">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            {% else %}
+                                <input type="file" name="imagen_{{ i }}" accept="image/*">
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <input type="hidden" name="imagenes_a_borrar" id="imagenes_a_borrar">
+            </div>
+
+            <button type="submit" class="btn-submit">
+                {{ "Guardar Cambios" if inmueble else "Registrar Inmueble" }}
+            </button>
+
+        </form>
+    </div>
 </div>
 
 {% block extra_js %}

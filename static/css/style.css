@@ -1,34 +1,32 @@
 :root {
-    --primary-blue: #0b1e42;   /* Azul profundo corporativo */
-    --accent-gold: #c5a059;    /* Dorado insignia */
-    --hover-bg: #162d5a;       /* Azul hover */
-    --bg-light: #f4f4f4;       /* Fondo página */
-    --text-dark: #2d3436;      /* Texto base */
+    --primary-blue: #0b1e42;
+    --accent-gold: #c5a059;
+    --hover-bg: #162d5a;
+    --bg-light: #f4f4f4;
+    --text-dark: #2d3436;
 }
 
 /* --- Base --- */
-body { 
-    font-family: 'Poppins', sans-serif; 
-    margin: 0; 
-    background-color: var(--bg-light); 
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: var(--bg-light);
     color: var(--text-dark);
 }
-.container {
-    display: flex;
-    position: relative; /* CRÍTICO: permite que el sidebar se posicione relativo a esto */
-    min-height: 100vh;
-}
 
+.container {
+    display: block;
+    width: 100%;
+}
 
 /* --- Contenido --- */
 .content {
-    flex: 1; 
+    flex: 1;
     width: 100%;
     min-width: 0;
     padding: 20px;
     box-sizing: border-box;
 }
-
 
 /* --- Footer --- */
 footer {
@@ -88,22 +86,22 @@ i[data-lucide] { width: 18px; height: 18px; }
 }
 .cookie-content h2 { color: var(--primary-blue); margin-top: 0; }
 .cookie-content p { color: var(--text-dark); margin-bottom: 25px; line-height: 1.5; }
-.btn-primary { 
-    background: var(--primary-blue); 
-    color: #fff; 
-    padding: 12px 25px; 
-    border-radius: 25px; 
-    border: none; 
-    cursor: pointer; 
+.btn-primary {
+    background: var(--primary-blue);
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
     font-weight: 600;
     margin-right: 15px;
     transition: background 0.3s;
 }
 .btn-primary:hover { background: var(--hover-bg); }
-.cookie-content a { 
-    color: var(--primary-blue); 
-    text-decoration: underline; 
-    font-weight: 600; 
+.cookie-content a {
+    color: var(--primary-blue);
+    text-decoration: underline;
+    font-weight: 600;
     font-size: 0.95rem;
 }
 
@@ -171,73 +169,91 @@ i[data-lucide] { width: 18px; height: 18px; }
 }
 .declaracion h3 { color: var(--primary-blue); margin-bottom: 12px; }
 
-
-
-/* --- 1. Botón Hamburguesa --- */
+/* --- Botón Hamburguesa --- */
 .menu-toggle {
-    display: block; 
+    display: block;
     position: fixed;
-    top: 15px;
-    left: 15px;
-    /* Usamos un valor de z-index muy alto */
-    z-index: 9999 !important; 
+    top: 20px;
+    left: 20px;
+    z-index: 999999;
     background: var(--primary-blue);
-    border: none;
+    border: 1px solid var(--accent-gold);
     color: white;
-    padding: 10px;
-    border-radius: 4px;
+    padding: 10px 15px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: opacity 0.3s ease;
-    /* Asegura que el botón siempre capture los clics */
-    pointer-events: auto !important; 
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    visibility: visible;
 }
 
-/* --- 2. Sidebar --- */
+.menu-toggle:hover {
+    background: var(--accent-gold);
+    color: var(--primary-blue);
+    transform: scale(1.05);
+}
+
+/* --- Sidebar --- */
 .sidebar {
-    width: 250px;
-    background-color: var(--primary-blue);
-    color: white;
-    padding: 20px;
-    height: 100vh;
     position: fixed;
     top: 0;
-    left: 0;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 2000;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    z-index: 999998;
+    background: #0a1628;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    transition: left 0.3s ease;
+    overflow-y: auto;
 }
 
 .sidebar.active {
-    transform: translateX(0);
+    left: 0;
 }
 
-/* --- 3. Botón de Cierre (La "X") --- */
+/* --- Botón de Cierre --- */
 .close-btn {
-    font-size: 30px;
+    font-size: 2rem;
     cursor: pointer;
     text-align: right;
     display: block;
     margin-bottom: 20px;
+    color: var(--accent-gold);
+    line-height: 1;
+}
+
+/* --- Enlaces sidebar --- */
+.sidebar h2 {
     color: white;
+    margin-bottom: 30px;
+    padding-left: 15px;
 }
-
-/* --- 4. Estilos internos (Listas y enlaces) --- */
-.sidebar ul { list-style: none; padding: 0; margin-top: 20px; }
-.sidebar a { 
-    color: white; 
-    text-decoration: none; 
-    display: block; 
-    padding: 12px 15px; 
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar a {
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    padding: 15px;
     transition: all 0.3s ease;
-    border-left: 4px solid transparent; 
+    border-left: 4px solid transparent;
 }
-.sidebar a:hover { 
-    background: var(--hover-bg); 
-    border-left: 4px solid var(--accent-gold); 
-    padding-left: 20px; 
+.sidebar a:hover {
+    background: rgba(255,255,255,0.05);
+    border-left: 4px solid var(--accent-gold);
+    padding-left: 20px;
+}
+.sidebar a.active {
+    border-left: 4px solid var(--accent-gold);
+    color: var(--accent-gold);
+    background: rgba(197,160,89,0.08);
 }
 
-/* --- 5. Overlay --- */
+/* --- Overlay --- */
 .sidebar-overlay {
     display: none;
     position: fixed;
@@ -245,17 +261,59 @@ i[data-lucide] { width: 18px; height: 18px; }
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1500;
+    background: rgba(0,0,0,0.7);
+    z-index: 999997;
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
-.sidebar-overlay.active { display: block; }
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
 
-/* --- 6. Ajuste Escritorio --- */
-@media (min-width: 768px) {
-    .menu-toggle, .close-btn { display: none; }
-    .sidebar { 
-        transform: translateX(0); 
-        position: static; 
-        height: auto; 
-    }
+/* --- Alert box --- */
+.alert-box {
+    background: #fff3cd;
+    border: 1px solid var(--accent-gold);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    color: var(--primary-blue);
+    font-weight: 500;
+}
+/* --- Logo de fondo global --- */
+
+.bg-logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    opacity: 0.04;
+    mix-blend-mode: multiply;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5%;
+    box-sizing: border-box;
+}
+
+.bg-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+}
+
+/* --- Z-index para contenido sobre el logo --- */
+.container, footer, .detalle-container,
+.catalogo-container, .form-container,
+.simulador-container, .register-wrapper,
+.login-wrapper, .contacto-wrapper {
+    position: relative;
+    z-index: 1;
 }

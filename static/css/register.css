@@ -1,5 +1,5 @@
 /* =============================================
-   CAPITAL GROUP — login.css
+   CAPITAL GROUP — register.css
    ============================================= */
 
 * { box-sizing: border-box; }
@@ -10,14 +10,14 @@ body {
     margin: 0;
 }
 
-.login-wrapper {
+.register-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
     min-height: 100vh;
 }
 
 /* ===== Panel izquierdo ===== */
-.login-left {
+.register-left {
     background: linear-gradient(150deg, #0a1628 0%, #0f1e3d 50%, #1a3366 100%);
     padding: 60px 50px;
     display: flex;
@@ -27,7 +27,7 @@ body {
     overflow: hidden;
 }
 
-.login-left-logo {
+.reg-left-logo {
     position: absolute;
     bottom: -40px;
     right: -30px;
@@ -39,13 +39,13 @@ body {
     user-select: none;
 }
 
-.login-left-content {
+.reg-left-content {
     position: relative;
     z-index: 2;
     max-width: 380px;
 }
 
-.login-tag {
+.reg-tag {
     display: inline-block;
     font-size: 0.68rem;
     font-weight: 700;
@@ -58,7 +58,7 @@ body {
     margin-bottom: 24px;
 }
 
-.login-left h2 {
+.register-left h2 {
     font-size: 2.4rem;
     font-weight: 900;
     color: #ffffff;
@@ -66,14 +66,14 @@ body {
     margin: 0 0 18px 0;
 }
 
-.login-left p {
+.register-left p {
     font-size: 0.92rem;
     color: rgba(255,255,255,0.5);
     line-height: 1.7;
     margin: 0 0 36px 0;
 }
 
-.login-features {
+.reg-features {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -82,7 +82,7 @@ body {
     gap: 16px;
 }
 
-.login-features li {
+.reg-features li {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -91,7 +91,7 @@ body {
     color: rgba(255,255,255,0.75);
 }
 
-.login-features li i {
+.reg-features li i {
     width: 18px;
     height: 18px;
     color: var(--accent-gold);
@@ -99,7 +99,7 @@ body {
 }
 
 /* ===== Panel derecho ===== */
-.login-right {
+.register-right {
     background: #ffffff;
     padding: 60px 50px;
     display: flex;
@@ -107,11 +107,11 @@ body {
     justify-content: center;
 }
 
-.login-form-header {
+.reg-form-header {
     margin-bottom: 36px;
 }
 
-.login-form-tag {
+.reg-form-tag {
     display: inline-block;
     font-size: 0.68rem;
     font-weight: 700;
@@ -121,40 +121,40 @@ body {
     margin-bottom: 8px;
 }
 
-.login-form-header h3 {
+.reg-form-header h3 {
     font-size: 1.8rem;
     font-weight: 800;
     color: var(--primary-blue);
     margin: 0 0 6px 0;
 }
 
-.login-form-header p {
+.reg-form-header p {
     font-size: 0.85rem;
     color: #888;
     margin: 0;
 }
 
 /* Campos */
-.login-form {
+.reg-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.login-field {
+.reg-field {
     display: flex;
     flex-direction: column;
     gap: 7px;
 }
 
-.login-field label {
+.reg-field label {
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--primary-blue);
     letter-spacing: 0.3px;
 }
 
-.login-input-wrap {
+.reg-input-wrap {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -165,13 +165,13 @@ body {
     transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
 }
 
-.login-input-wrap:focus-within {
+.reg-input-wrap:focus-within {
     border-color: var(--accent-gold);
     background: #ffffff;
     box-shadow: 0 0 0 3px rgba(197,160,89,0.12);
 }
 
-.login-input-wrap i {
+.reg-input-wrap i {
     width: 18px;
     height: 18px;
     color: #b0bec5;
@@ -179,11 +179,11 @@ body {
     transition: color 0.2s;
 }
 
-.login-input-wrap:focus-within i {
+.reg-input-wrap:focus-within i {
     color: var(--accent-gold);
 }
 
-.login-input-wrap input {
+.reg-input-wrap input {
     flex: 1;
     border: none;
     outline: none;
@@ -195,13 +195,13 @@ body {
     font-weight: 500;
 }
 
-.login-input-wrap input::placeholder {
+.reg-input-wrap input::placeholder {
     color: #b0bec5;
     font-weight: 400;
 }
 
 /* Botón */
-.btn-login {
+.btn-register {
     width: 100%;
     background: linear-gradient(135deg, var(--primary-blue) 0%, #1a3366 100%);
     color: #ffffff;
@@ -217,46 +217,46 @@ body {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.btn-login:hover {
+.btn-register:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(11,30,66,0.25);
 }
 
-/* Link registro */
-.login-register-link {
+/* Link login */
+.reg-login-link {
     text-align: center;
     font-size: 0.85rem;
     color: #888;
     margin-top: 24px;
 }
 
-.login-register-link a {
+.reg-login-link a {
     color: var(--accent-gold);
     font-weight: 600;
     text-decoration: none;
     transition: color 0.2s;
 }
 
-.login-register-link a:hover {
+.reg-login-link a:hover {
     color: var(--primary-blue);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .login-wrapper {
+    .register-wrapper {
         grid-template-columns: 1fr;
         min-height: auto;
     }
 
-    .login-left {
+    .register-left {
         padding: 50px 30px;
         min-height: 280px;
     }
 
-    .login-left h2 { font-size: 1.8rem; }
-    .login-left-logo { font-size: 12rem; }
+    .register-left h2 { font-size: 1.8rem; }
+    .reg-left-logo { font-size: 12rem; }
 
-    .login-right {
+    .register-right {
         padding: 40px 24px;
     }
 }

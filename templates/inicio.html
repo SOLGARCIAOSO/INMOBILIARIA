@@ -1,64 +1,153 @@
 {% extends "layout.html" %}
-
 {% block extra_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/inicio.css') }}">
 {% endblock %}
-
 {% block content %}
-<!-- Hero principal -->
-<div class="hero">
-  <div class="hero-text">
-    <h1>Capital Group</h1>
-    <p>Donde la inversión se convierte en patrimonio.</p>
-    <form class="buscador" action="{{ url_for('catalogo') }}" method="GET">
-        <input type="text" name="q" placeholder="Busca por ciudad, barrio o inmueble..." required>
-        <button type="submit">Buscar</button>
-      </form>
-  </div>
-</div>
 
-<!-- Sección de servicios -->
-<section class="servicios">
-  <h2>Nuestros Servicios</h2>
-  <div class="servicios-grid">
-    <div class="servicio">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home">
-        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-      <h3>Compra</h3>
-      <p>Encuentra tu hogar ideal con asesoría experta.</p>
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-bg-logo">CG</div>
+    <div class="hero-content">
+        <span class="hero-tag">Inmobiliaria Premium</span>
+        <h1>Capital <span>Group</span></h1>
+        <p>Donde la inversión se convierte en patrimonio.</p>
+      <form class="buscador" action="/catalogo" method="GET">
+        <input type="text" name="q" placeholder="Busca por ciudad o localidad...">
+        <button type="submit" class="btn-search">
+          <i data-lucide="search"></i>
+        </button>
+      </form>
     </div>
-    <div class="servicio">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase">
-        <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-      </svg>
-      <h3>Inversión</h3>
-      <p>Haz crecer tu patrimonio con proyectos seguros.</p>
+    <div class="hero-stats">
+        <div class="stat-item">
+            <span class="stat-num">+200</span>
+            <span class="stat-label">Propiedades</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+            <span class="stat-num">+5</span>
+            <span class="stat-label">Años de experiencia</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+            <span class="stat-num">100%</span>
+            <span class="stat-label">Clientes satisfechos</span>
+        </div>
     </div>
-    <div class="servicio">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text">
-        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 12h4"/><path d="M10 16h4"/><path d="M8 8h1"/>
-      </svg>
-      <h3>Crédito</h3>
-      <p>Opciones de financiación flexibles y rápidas.</p>
-    </div>
-  </div>
 </section>
 
-<!-- Sección de confianza -->
-<section class="confianza">
-  <h2>Por qué elegirnos</h2>
-  <ul>
-    <li><i data-lucide="check-circle" style="color: #d4af37;"></i> Más de 10 años de experiencia</li>
-    <li><i data-lucide="check-circle" style="color: #d4af37;"></i> Asesoría personalizada</li>
-    <li><i data-lucide="check-circle" style="color: #d4af37;"></i> Innovación y transparencia</li>
-  </ul>
+<!-- Servicios -->
+<section class="servicios">
+    <div class="servicios-inner">
+        <div class="section-header">
+            <span class="section-tag">Lo que hacemos</span>
+            <h2>Nuestros Servicios</h2>
+        </div>
+        <div class="servicios-grid">
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                </div>
+                <h3>Compra</h3>
+                <p>Encuentra tu hogar ideal con asesoría experta en cada paso del proceso.</p>
+                <a href="/catalogo" class="servicio-link">Explorar →</a>
+            </div>
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                    </svg>
+                </div>
+                <h3>Inversión</h3>
+                <p>Haz crecer tu patrimonio con proyectos seguros y de alto potencial.</p>
+                <a href="/contacto" class="servicio-link">Consultar →</a>
+            </div>
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 12h4"/><path d="M10 16h4"/>
+                    </svg>
+                </div>
+                <h3>Crédito</h3>
+                <p>Opciones de financiación flexibles y rápidas adaptadas a tu perfil.</p>
+                <a href="/contacto" class="servicio-link">Saber más →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Por qué elegirnos -->
+<section class="porque">
+    <div class="porque-inner">
+        <div class="porque-texto">
+            <span class="section-tag">Nuestra diferencia</span>
+            <h2>¿Por qué elegir Capital Group?</h2>
+            <ul class="porque-lista">
+                <li>
+                    <div class="porque-icon"><i data-lucide="shield-check"></i></div>
+                    <div>
+                        <strong>Más de 5 años de experiencia</strong>
+                        <p>Conocemos el mercado inmobiliario de Bogotá a profundidad.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="porque-icon"><i data-lucide="users"></i></div>
+                    <div>
+                        <strong>Asesoría personalizada</strong>
+                        <p>Un asesor dedicado te acompaña durante todo el proceso.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="porque-icon"><i data-lucide="eye"></i></div>
+                    <div>
+                        <strong>Innovación y transparencia</strong>
+                        <p>Procesos claros, sin letra pequeña y con tecnología de punta.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="porque-stats">
+            <div class="pstat">
+                <span class="pstat-num">+200</span>
+                <span class="pstat-label">Propiedades vendidas</span>
+            </div>
+            <div class="pstat">
+                <span class="pstat-num">98%</span>
+                <span class="pstat-label">Satisfacción de clientes</span>
+            </div>
+            <div class="pstat">
+                <span class="pstat-num">24h</span>
+                <span class="pstat-label">Tiempo de respuesta</span>
+            </div>
+            <div class="pstat">
+                <span class="pstat-num">+5</span>
+                <span class="pstat-label">Años en el mercado</span>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- CTA -->
 <section class="cta">
-  <h2>Descubre nuestras oportunidades</h2>
-  <p>Explora el catálogo y encuentra tu próxima inversión.</p>
-  <a href="/catalogo" class="btn-principal">Ver catálogo</a>
+    <div class="cta-inner">
+        <div class="cta-bg-logo">CG</div>
+        <span class="section-tag">Empieza hoy</span>
+        <h2>Descubre nuestras oportunidades</h2>
+        <p>Explora el catálogo y encuentra tu próxima inversión en Bogotá.</p>
+        <div class="cta-btns">
+            <a href="/catalogo" class="btn-hero-primary">Ver catálogo</a>
+            <a href="/contacto" class="btn-hero-outline-dark">Contactar asesor</a>
+        </div>
+    </div>
 </section>
+
+{% endblock %}
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+</script>
 {% endblock %}

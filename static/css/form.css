@@ -1,110 +1,277 @@
-:root {
-    --primary-blue: #0b1e42;
-    --accent-gold: #c5a059;
-    --bg-page: #eef2f7;
-    --text-dark: #2d3436;
-}
-
-body { 
-    background-color: var(--bg-page); 
-    font-family: 'Poppins', sans-serif; 
-}
+/* =============================================
+   CAPITAL GROUP — form.css — Premium
+   ============================================= */
 
 .form-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 40px;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-    border-top: 6px solid var(--primary-blue);
+    max-width: 820px;
+    margin: 40px auto;
+    padding: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
 }
 
-.form-container h2 {
-    text-align: left;
-    margin-bottom: 30px;
-    color: var(--primary-blue);
+/* Header */
+.form-header {
+    background: linear-gradient(135deg, #0a1628 0%, #1a3366 100%);
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-header::after {
+    content: 'CG';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 8rem;
+    font-weight: 900;
+    color: rgba(197,160,89,0.06);
+    pointer-events: none;
+    line-height: 1;
+}
+
+.form-header-tag {
+    display: inline-block;
+    font-size: 0.68rem;
     font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    border: 1px solid rgba(197,160,89,0.35);
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
 }
 
+.form-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+}
+
+/* Body */
+.form-body {
+    background: #ffffff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* Secciones */
+.form-section {
+    margin-bottom: 32px;
+}
+
+.form-section-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Grids */
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 14px;
 }
 
-.form-container input, .form-container textarea {
+.form-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+}
+
+/* Inputs, textarea, select */
+.form-body input[type="text"],
+.form-body input[type="number"],
+.form-body input[type="email"],
+.form-body textarea,
+.form-body select {
     width: 100%;
-    padding: 15px;
-    margin: 10px 0;
-    border: 2px solid #edf2f7;
-    border-radius: 12px;
-    background-color: #fafbfc;
+    padding: 14px 18px;
+    border: 1.5px solid #e8edf2;
+    border-radius: 10px;
+    background: #f8fafc;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.97rem;
+    color: #1a1a2e;
+    font-weight: 500;
     box-sizing: border-box;
-    font-family: inherit;
-    transition: all 0.3s ease;
-}
-
-.form-container input:focus, .form-container textarea:focus {
+    transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
     outline: none;
+}
+
+.form-body input[type="text"]:focus,
+.form-body input[type="number"]:focus,
+.form-body textarea:focus,
+.form-body select:focus {
     border-color: var(--accent-gold);
-    background-color: #fff;
-    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.1);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(197,160,89,0.12);
 }
 
-/* Grupo de botones */
-.button-group {
+.form-body input::placeholder,
+.form-body textarea::placeholder {
+    color: #7a8a9a;
+    font-size: 0.92rem;
+    font-weight: 400;
+}
+
+.form-body textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.form-body select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c5a059' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-color: #f8fafc;
+    padding-right: 36px;
+}
+
+/* Checkboxes */
+.checkbox-grid {
     display: flex;
-    gap: 15px;
-    margin-top: 25px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
-/* Estilos de botones */
-.btn-submit {
-    flex: 1;
-    background: var(--primary-blue);
-    color: #fff;
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: #f8fafc;
+    border: 1.5px solid #e8edf2;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.92rem;
     font-weight: 600;
+    color: #1a1a2e;
+    transition: border-color 0.2s, background 0.2s;
+    user-select: none;
+}
+
+.checkbox-label:hover {
+    border-color: var(--accent-gold);
+    background: #fffdf7;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent-gold);
+    cursor: pointer;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+/* Galería */
+.galeria-edicion {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.img-slot {
+    border: 1.5px dashed #d0d9e8;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    background: #f8fafc;
+    transition: border-color 0.2s, background 0.2s;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.img-slot:hover {
+    border-color: var(--accent-gold);
+    background: #fffdf7;
+}
+
+.img-slot img {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
+
+.img-slot input[type="file"] {
+    width: 100%;
+    font-size: 0.72rem;
+    color: #888;
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+}
+
+.btn-borrar {
+    margin-top: 6px;
+    background: #fff0f0;
+    color: #e74c3c;
+    border: 1px solid #ffd0d0;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Poppins', sans-serif;
+}
+.btn-borrar:hover { background: #ffe0e0; }
+
+/* Botón submit */
+.btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #1a3366 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
     padding: 16px;
     border: none;
-    border-radius: 30px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 8px;
 }
 
 .btn-submit:hover {
-    background: var(--accent-gold);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);
+    box-shadow: 0 8px 24px rgba(11,30,66,0.25);
 }
 
-/* Estilo específico para el botón de mensaje rápido */
-.btn-quick {
-    flex: 1;
-    background: var(--accent-gold);
-    color: #fff;
-    font-weight: 600;
-    padding: 16px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+/* Responsive */
+@media (max-width: 700px) {
+    .form-header { padding: 28px 24px; }
+    .form-body { padding: 28px 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-row-3 { grid-template-columns: 1fr 1fr; }
+    .galeria-edicion { grid-template-columns: repeat(2, 1fr); }
 }
 
-.btn-quick:hover {
-    background: var(--primary-blue);
-}
-
-/* Ajuste responsivo para móviles */
-@media (max-width: 600px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    .button-group {
-        flex-direction: column;
-    }
+@media (max-width: 480px) {
+    .form-row-3 { grid-template-columns: 1fr; }
+    .galeria-edicion { grid-template-columns: repeat(2, 1fr); }
 }
